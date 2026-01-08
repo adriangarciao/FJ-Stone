@@ -15,7 +15,7 @@ export default async function AdminProjectsPage() {
         </div>
         <Link
           href="/admin/projects/new"
-          className="bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
+          className="bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
         >
           <Plus size={20} />
           Add Project
@@ -29,7 +29,7 @@ export default async function AdminProjectsPage() {
           <p className="text-gray-500 mb-4">No projects yet.</p>
           <Link
             href="/admin/projects/new"
-            className="inline-flex items-center gap-2 text-[#d4a853] hover:text-[#c49943] font-medium"
+            className="inline-flex items-center gap-2 text-[#990303] hover:text-[#71706e] font-medium"
           >
             <Plus size={18} />
             Create your first project
@@ -39,3 +39,4 @@ export default async function AdminProjectsPage() {
     </div>
   );
 }
+

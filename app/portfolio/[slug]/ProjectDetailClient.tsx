@@ -39,8 +39,8 @@ export default function ProjectDetailClient({
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-end bg-[#1a1a2e] pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44]" />
+      <section className="relative min-h-[60vh] flex items-end bg-[#292323] pt-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
         <div className="relative z-10 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <motion.div
@@ -55,7 +55,7 @@ export default function ProjectDetailClient({
                 <ArrowLeft size={18} className="mr-2" />
                 Back to Portfolio
               </Link>
-              <span className="inline-block bg-[#d4a853] text-[#1a1a2e] text-sm font-semibold px-3 py-1 mb-4">
+              <span className="inline-block bg-[#990303] text-white border-2 border-white text-sm font-semibold px-3 py-1 mb-4">
                 {project.service_type}
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
@@ -80,7 +80,7 @@ export default function ProjectDetailClient({
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44] flex items-center justify-center overflow-hidden">
+            <div className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center overflow-hidden">
               {currentImageUrl ? (
                 <Image
                   src={currentImageUrl}
@@ -103,14 +103,14 @@ export default function ProjectDetailClient({
                     className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-10"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft size={24} className="text-[#1a1a2e]" />
+                    <ChevronLeft size={24} className="text-[#292323]" />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-10"
                     aria-label="Next image"
                   >
-                    <ChevronRight size={24} className="text-[#1a1a2e]" />
+                    <ChevronRight size={24} className="text-[#292323]" />
                   </button>
                 </>
               )}
@@ -124,7 +124,7 @@ export default function ProjectDetailClient({
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`w-2 h-2 rounded-full transition-colors ${
-                      index === currentImageIndex ? 'bg-[#d4a853]' : 'bg-gray-300'
+                      index === currentImageIndex ? 'bg-[#990303]' : 'bg-gray-300'
                     }`}
                     aria-label={`Go to image ${index + 1}`}
                   />
@@ -179,7 +179,7 @@ export default function ProjectDetailClient({
 
             <Link
               href="/contact"
-              className="inline-block bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-8 py-3.5 font-semibold transition-colors"
+              className="inline-block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-8 py-3.5 font-semibold transition-colors"
             >
               Request a Similar Project
             </Link>
@@ -205,7 +205,7 @@ export default function ProjectDetailClient({
                   href={`/portfolio/${relatedProject.slug}`}
                   className="group"
                 >
-                  <div className="relative aspect-[4/3] bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44] flex items-center justify-center overflow-hidden mb-4">
+                  <div className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center overflow-hidden mb-4">
                     {imageUrl ? (
                       <Image
                         src={imageUrl}
@@ -217,18 +217,18 @@ export default function ProjectDetailClient({
                     ) : (
                       <span className="text-white/30 text-sm">Project Image</span>
                     )}
-                    <div className="absolute inset-0 bg-[#1a1a2e]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[#292323]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <span className="text-white font-semibold border-2 border-white px-4 py-2">
                         View Project
                       </span>
                     </div>
                     <div className="absolute top-4 left-4">
-                      <span className="bg-[#d4a853] text-[#1a1a2e] text-xs font-semibold px-3 py-1">
+                      <span className="bg-[#990303] text-white border-2 border-white text-xs font-semibold px-3 py-1">
                         {relatedProject.service_type}
                       </span>
                     </div>
                   </div>
-                  <h3 className="font-bold text-gray-900 group-hover:text-[#d4a853] transition-colors">
+                  <h3 className="font-bold text-gray-900 group-hover:text-[#990303] transition-colors">
                     {relatedProject.title}
                   </h3>
                   <p className="text-gray-500 text-sm">{relatedProject.location}</p>
@@ -241,3 +241,4 @@ export default function ProjectDetailClient({
     </>
   );
 }
+

@@ -23,7 +23,7 @@ export default function Section({
   const bgClasses = {
     white: 'bg-white',
     gray: 'bg-gray-50',
-    dark: 'bg-[#1a1a2e] text-white',
+    dark: 'bg-[#292323] text-white',
   };
 
   return (
@@ -78,3 +78,4 @@ export function SectionHeader({
     </div>
   );
 }
+

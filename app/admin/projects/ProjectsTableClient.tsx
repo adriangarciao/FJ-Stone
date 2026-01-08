@@ -81,7 +81,7 @@ export default function ProjectsTableClient({ projects }: ProjectsTableClientPro
                         </p>
                         <div className="flex items-center gap-2 mt-1">
                           {project.featured && (
-                            <span className="inline-flex items-center gap-1 text-xs bg-[#d4a853]/20 text-[#d4a853] px-2 py-0.5">
+                            <span className="inline-flex items-center gap-1 text-xs bg-[#990303]/20 text-[#990303] px-2 py-0.5">
                               <Star size={10} />
                               Featured
                             </span>
@@ -119,7 +119,7 @@ export default function ProjectsTableClient({ projects }: ProjectsTableClientPro
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/projects/${project.id}`}
-                        className="p-2 text-gray-500 hover:text-[#d4a853] transition-colors"
+                        className="p-2 text-gray-500 hover:text-[#990303] transition-colors"
                         title="Edit"
                       >
                         <Edit size={18} />
@@ -143,3 +143,4 @@ export default function ProjectsTableClient({ projects }: ProjectsTableClientPro
     </div>
   );
 }
+

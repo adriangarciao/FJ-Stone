@@ -31,7 +31,7 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#1a1a2e]/95 backdrop-blur-md shadow-lg'
+          ? 'bg-[#292323]/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -40,7 +40,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold text-white tracking-tight">
-              FJ<span className="text-[#d4a853]">Stone</span>
+              FJ<span className="text-[#990303]">Stone</span>
             </span>
           </Link>
 
@@ -57,7 +57,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/contact"
-              className="bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-6 py-2.5 font-semibold transition-colors"
+              className="bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-6 py-2.5 font-semibold transition-colors"
             >
               Contact Us
             </Link>
@@ -79,7 +79,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-[#1a1a2e]/95 backdrop-blur-md"
+            className="md:hidden bg-[#292323]/95 backdrop-blur-md"
           >
             <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
@@ -95,7 +95,7 @@ export default function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-6 py-2.5 font-semibold text-center transition-colors"
+                className="block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-6 py-2.5 font-semibold text-center transition-colors"
               >
                 Contact Us
               </Link>
@@ -106,3 +106,4 @@ export default function Navbar() {
     </motion.header>
   );
 }
+

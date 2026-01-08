@@ -43,7 +43,7 @@ export default function ReviewsListClient({ reviews }: ReviewsListClientProps) {
                       size={16}
                       className={
                         i < review.rating
-                          ? 'fill-[#d4a853] text-[#d4a853]'
+                          ? 'fill-[#990303] text-[#990303]'
                           : 'text-gray-300'
                       }
                     />
@@ -75,7 +75,7 @@ export default function ReviewsListClient({ reviews }: ReviewsListClientProps) {
                   )}
                 </span>
                 {review.is_featured && (
-                  <span className="text-sm bg-[#d4a853]/20 text-[#d4a853] px-2 py-0.5">
+                  <span className="text-sm bg-[#990303]/20 text-[#990303] px-2 py-0.5">
                     Featured
                   </span>
                 )}
@@ -84,7 +84,7 @@ export default function ReviewsListClient({ reviews }: ReviewsListClientProps) {
             <div className="flex items-center gap-2 ml-4">
               <Link
                 href={`/admin/reviews/${review.id}`}
-                className="p-2 text-gray-500 hover:text-[#d4a853] transition-colors"
+                className="p-2 text-gray-500 hover:text-[#990303] transition-colors"
               >
                 <Edit size={18} />
               </Link>
@@ -102,3 +102,4 @@ export default function ReviewsListClient({ reviews }: ReviewsListClientProps) {
     </div>
   );
 }
+

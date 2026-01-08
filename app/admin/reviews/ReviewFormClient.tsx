@@ -66,7 +66,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
               name="name"
               defaultValue={review?.name}
               required
-              className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+              className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
               placeholder="Customer name"
             />
           </div>
@@ -81,7 +81,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
                 name="rating"
                 defaultValue={review?.rating ?? 5}
                 required
-                className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] bg-white"
+                className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] bg-white"
               >
                 {[5, 4, 3, 2, 1].map((value) => (
                   <option key={value} value={value}>
@@ -100,7 +100,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
                 id="source"
                 name="source"
                 defaultValue={review?.source || ''}
-                className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                 placeholder="Google, Yelp, Facebook"
               />
             </div>
@@ -116,7 +116,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
               defaultValue={review?.text}
               required
               rows={5}
-              className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] resize-none"
+              className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] resize-none"
               placeholder="Write the customer review..."
             />
           </div>
@@ -128,7 +128,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
                 name="is_featured"
                 value="true"
                 defaultChecked={review?.is_featured}
-                className="w-4 h-4 text-[#d4a853] focus:ring-[#d4a853]"
+                className="w-4 h-4 text-[#990303] focus:ring-[#990303]"
               />
               <span className="text-sm text-gray-700">Featured review</span>
             </label>
@@ -139,7 +139,7 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
                 name="is_published"
                 value="true"
                 defaultChecked={review?.is_published ?? true}
-                className="w-4 h-4 text-[#d4a853] focus:ring-[#d4a853]"
+                className="w-4 h-4 text-[#990303] focus:ring-[#990303]"
               />
               <span className="text-sm text-gray-700">Published</span>
             </label>
@@ -149,11 +149,11 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#d4a853] hover:bg-[#c49943] disabled:bg-gray-400 text-[#1a1a2e] px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
+              className="bg-[#990303] hover:bg-[#71706e] disabled:bg-gray-400 text-white border-2 border-white px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
             >
               {isSubmitting ? (
                 <>
-                  <span className="animate-spin w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full" />
+                  <span className="animate-spin w-5 h-5 border-2 border-[#292323] border-t-transparent rounded-full" />
                   Saving...
                 </>
               ) : (
@@ -169,3 +169,4 @@ export default function ReviewFormClient({ review }: ReviewFormClientProps) {
     </>
   );
 }
+

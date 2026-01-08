@@ -58,11 +58,11 @@ export default async function AdminPage() {
           <Link
             key={link.href}
             href={link.href}
-            className="block bg-white p-6 border border-gray-200 hover:border-[#d4a853] hover:shadow-lg transition-all group"
+            className="block bg-white p-6 border border-gray-200 hover:border-[#990303] hover:shadow-lg transition-all group"
           >
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-[#d4a853]/10 flex items-center justify-center group-hover:bg-[#d4a853]/20 transition-colors">
-                <link.icon size={24} className="text-[#d4a853]" />
+              <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center group-hover:bg-[#990303]/20 transition-colors">
+                <link.icon size={24} className="text-[#990303]" />
               </div>
               {link.countKey && (
                 <span className="text-2xl font-bold text-gray-900">
@@ -85,7 +85,7 @@ export default async function AdminPage() {
             <h2 className="text-xl font-bold text-gray-900">Recent Quote Requests</h2>
             <Link
               href="/admin/quotes"
-              className="text-[#d4a853] hover:text-[#c49943] font-medium text-sm"
+              className="text-[#990303] hover:text-[#71706e] font-medium text-sm"
             >
               View all →
             </Link>
@@ -143,3 +143,4 @@ export default async function AdminPage() {
     </div>
   );
 }
+

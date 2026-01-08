@@ -21,7 +21,7 @@ export default function ReviewCard({ review, index = 0 }: ReviewCardProps) {
       {/* Quote Icon */}
       <Quote
         size={40}
-        className="absolute top-6 right-6 text-[#d4a853]/20"
+        className="absolute top-6 right-6 text-[#990303]/20"
       />
 
       {/* Stars */}
@@ -32,7 +32,7 @@ export default function ReviewCard({ review, index = 0 }: ReviewCardProps) {
             size={18}
             className={
               i < review.rating
-                ? 'fill-[#d4a853] text-[#d4a853]'
+                ? 'fill-[#990303] text-[#990303]'
                 : 'text-gray-300'
             }
           />
@@ -54,3 +54,4 @@ export default function ReviewCard({ review, index = 0 }: ReviewCardProps) {
     </motion.div>
   );
 }
+

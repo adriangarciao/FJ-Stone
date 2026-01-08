@@ -38,22 +38,22 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       whileHover={{ y: -5 }}
       className="bg-white border border-gray-200 p-8 group hover:shadow-xl transition-shadow"
     >
-      <div className="w-14 h-14 bg-[#d4a853]/10 flex items-center justify-center mb-6 group-hover:bg-[#d4a853]/20 transition-colors">
-        <Icon size={28} className="text-[#d4a853]" />
+      <div className="w-14 h-14 bg-[#990303]/10 flex items-center justify-center mb-6 group-hover:bg-[#990303]/20 transition-colors">
+        <Icon size={28} className="text-[#990303]" />
       </div>
       <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
       <p className="text-gray-600 mb-4 line-clamp-3">{service.description}</p>
       <ul className="space-y-2 mb-6">
         {service.features.slice(0, 3).map((feature, i) => (
           <li key={i} className="flex items-center text-sm text-gray-600">
-            <span className="w-1.5 h-1.5 bg-[#d4a853] rounded-full mr-2" />
+            <span className="w-1.5 h-1.5 bg-[#990303] rounded-full mr-2" />
             {feature}
           </li>
         ))}
       </ul>
       <Link
         href="/contact"
-        className="inline-flex items-center text-[#d4a853] font-semibold hover:text-[#c49943] transition-colors"
+        className="inline-flex items-center text-[#990303] font-semibold hover:text-[#71706e] transition-colors"
       >
         Get a Quote
         <svg
@@ -73,3 +73,4 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     </motion.div>
   );
 }
+

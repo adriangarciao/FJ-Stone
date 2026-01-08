@@ -58,7 +58,7 @@ export default function HomePageClient({
         <div className="text-center mt-12">
           <Link
             href="/services"
-            className="inline-flex items-center text-[#1a1a2e] font-semibold hover:text-[#d4a853] transition-colors"
+            className="inline-flex items-center text-[#292323] font-semibold hover:text-[#990303] transition-colors"
           >
             View All Services
             <ArrowRight size={18} className="ml-2" />
@@ -85,8 +85,8 @@ export default function HomePageClient({
                   viewport={{ once: true }}
                   className="flex items-start gap-3"
                 >
-                  <div className="w-6 h-6 bg-[#d4a853] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check size={16} className="text-[#1a1a2e]" />
+                  <div className="w-6 h-6 bg-[#990303] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check size={16} className="text-[#292323]" />
                   </div>
                   <span className="text-gray-700">{item}</span>
                 </motion.li>
@@ -98,7 +98,7 @@ export default function HomePageClient({
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative aspect-[4/3] bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44] flex items-center justify-center"
+            className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center"
           >
             <span className="text-white/30 text-sm">Company Image</span>
           </motion.div>
@@ -125,7 +125,7 @@ export default function HomePageClient({
         <div className="text-center mt-12">
           <Link
             href="/portfolio"
-            className="inline-flex items-center bg-[#1a1a2e] hover:bg-[#2d2d44] text-white px-8 py-3 font-semibold transition-colors"
+            className="inline-flex items-center bg-[#292323] hover:bg-[#71706e] text-white px-8 py-3 font-semibold transition-colors"
           >
             View All Projects
             <ArrowRight size={18} className="ml-2" />
@@ -182,7 +182,7 @@ export default function HomePageClient({
           >
             <Link
               href="/contact"
-              className="inline-block bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-10 py-4 font-semibold text-lg transition-colors"
+              className="inline-block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-10 py-4 font-semibold text-lg transition-colors"
             >
               Get Your Free Quote
             </Link>
@@ -192,3 +192,4 @@ export default function HomePageClient({
     </>
   );
 }
+

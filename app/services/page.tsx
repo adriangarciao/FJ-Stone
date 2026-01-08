@@ -28,8 +28,8 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center bg-[#1a1a2e] pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44]" />
+      <section className="relative min-h-[50vh] flex items-center justify-center bg-[#292323] pt-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -71,8 +71,8 @@ export default function ServicesPage() {
                 className={isEven ? '' : 'lg:order-2'}
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 bg-[#d4a853]/10 flex items-center justify-center">
-                    <Icon size={28} className="text-[#d4a853]" />
+                  <div className="w-14 h-14 bg-[#990303]/10 flex items-center justify-center">
+                    <Icon size={28} className="text-[#990303]" />
                   </div>
                   <h2 className="text-3xl font-bold text-gray-900">{service.title}</h2>
                 </div>
@@ -82,8 +82,8 @@ export default function ServicesPage() {
                 <ul className="space-y-3 mb-8">
                   {service.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-3">
-                      <div className="w-5 h-5 bg-[#d4a853] flex items-center justify-center flex-shrink-0">
-                        <Check size={14} className="text-[#1a1a2e]" />
+                      <div className="w-5 h-5 bg-[#990303] flex items-center justify-center flex-shrink-0">
+                        <Check size={14} className="text-[#292323]" />
                       </div>
                       <span className="text-gray-700">{feature}</span>
                     </li>
@@ -91,7 +91,7 @@ export default function ServicesPage() {
                 </ul>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-6 py-3 font-semibold transition-colors"
+                  className="inline-flex items-center bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-6 py-3 font-semibold transition-colors"
                 >
                   Request a Quote
                   <ArrowRight size={18} className="ml-2" />
@@ -103,7 +103,7 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className={`relative aspect-[4/3] bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44] flex items-center justify-center ${isEven ? '' : 'lg:order-1'}`}
+                className={`relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center ${isEven ? '' : 'lg:order-1'}`}
               >
                 <span className="text-white/30 text-sm">Service Image</span>
               </motion.div>
@@ -143,13 +143,13 @@ export default function ServicesPage() {
           >
             <Link
               href="/contact"
-              className="w-full sm:w-auto bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-8 py-3.5 font-semibold transition-colors"
+              className="w-full sm:w-auto bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-8 py-3.5 font-semibold transition-colors"
             >
               Get Your Free Quote
             </Link>
             <Link
               href="/portfolio"
-              className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-[#1a1a2e] px-8 py-3.5 font-semibold transition-all"
+              className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-[#292323] px-8 py-3.5 font-semibold transition-all"
             >
               View Our Work
             </Link>
@@ -159,3 +159,4 @@ export default function ServicesPage() {
     </>
   );
 }
+

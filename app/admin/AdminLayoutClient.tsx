@@ -52,9 +52,9 @@ export default function AdminLayoutClient({
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#1a1a2e] z-40 flex items-center justify-between px-4">
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#292323] z-40 flex items-center justify-between px-4">
         <Link href="/admin" className="text-xl font-bold text-white">
-          FJ<span className="text-[#d4a853]">Stone</span>
+          FJ<span className="text-[#990303]">Stone</span>
           <span className="text-sm font-normal ml-2 text-gray-400">Admin</span>
         </Link>
         <button
@@ -67,13 +67,13 @@ export default function AdminLayoutClient({
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-[#1a1a2e] z-30 transform transition-transform lg:translate-x-0 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#292323] z-30 transform transition-transform lg:translate-x-0 ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="p-6 border-b border-gray-800">
           <Link href="/admin" className="text-xl font-bold text-white">
-            FJ<span className="text-[#d4a853]">Stone</span>
+            FJ<span className="text-[#990303]">Stone</span>
           </Link>
           <p className="text-gray-400 text-sm mt-1">Admin Dashboard</p>
         </div>
@@ -91,7 +91,7 @@ export default function AdminLayoutClient({
                 onClick={() => setIsSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded transition-colors ${
                   isActive
-                    ? 'bg-[#d4a853] text-[#1a1a2e]'
+                    ? 'bg-[#990303] text-white border-2 border-white'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800'
                 }`}
               >
@@ -104,7 +104,7 @@ export default function AdminLayoutClient({
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800">
           <div className="flex items-center gap-3 px-4 py-2 mb-2">
-            <div className="w-8 h-8 bg-[#d4a853] rounded-full flex items-center justify-center text-[#1a1a2e] font-semibold text-sm">
+            <div className="w-8 h-8 bg-[#990303] rounded-full flex items-center justify-center text-white border-2 border-white font-semibold text-sm">
               {user.email?.[0].toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
@@ -140,3 +140,4 @@ export default function AdminLayoutClient({
     </div>
   );
 }
+

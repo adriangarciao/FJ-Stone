@@ -81,7 +81,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                   name="business_name"
                   defaultValue={settings.business_name}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                 />
               </div>
 
@@ -99,7 +99,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                     name="phone"
                     defaultValue={settings.phone}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                   />
                 </div>
                 <div>
@@ -115,7 +115,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                     name="email"
                     defaultValue={settings.email}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                   name="service_area"
                   defaultValue={settings.service_area}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                 />
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                   name="hero_headline"
                   defaultValue={settings.hero_headline}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                 />
               </div>
 
@@ -175,7 +175,7 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
                   defaultValue={settings.hero_subheadline}
                   required
                   rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] resize-none"
                 />
               </div>
             </div>
@@ -186,11 +186,11 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
             <button
               type="submit"
               disabled={isSaving}
-              className="w-full bg-[#d4a853] hover:bg-[#c49943] disabled:bg-gray-400 text-[#1a1a2e] px-6 py-3 font-semibold flex items-center justify-center gap-2 transition-colors"
+              className="w-full bg-[#990303] hover:bg-[#71706e] disabled:bg-gray-400 text-white border-2 border-white px-6 py-3 font-semibold flex items-center justify-center gap-2 transition-colors"
             >
               {isSaving ? (
                 <>
-                  <span className="animate-spin w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full" />
+                  <span className="animate-spin w-5 h-5 border-2 border-[#292323] border-t-transparent rounded-full" />
                   Saving...
                 </>
               ) : (
@@ -206,3 +206,4 @@ export default function SettingsFormClient({ settings }: SettingsFormClientProps
     </>
   );
 }
+
