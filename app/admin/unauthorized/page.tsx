@@ -34,13 +34,13 @@ export default function UnauthorizedPage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={handleSignOut}
-            className="bg-[#1a1a2e] hover:bg-[#2d2d44] text-white px-6 py-3 font-semibold transition-colors"
+            className="bg-[#292323] hover:bg-[#71706e] text-white px-6 py-3 font-semibold transition-colors"
           >
             Sign Out
           </button>
           <Link
             href="/"
-            className="border-2 border-[#1a1a2e] text-[#1a1a2e] hover:bg-[#1a1a2e] hover:text-white px-6 py-3 font-semibold transition-all"
+            className="border-2 border-[#292323] text-[#292323] hover:bg-[#292323] hover:text-white px-6 py-3 font-semibold transition-all"
           >
             Go to Website
           </Link>
@@ -49,3 +49,4 @@ export default function UnauthorizedPage() {
     </div>
   );
 }
+

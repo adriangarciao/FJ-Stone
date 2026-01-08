@@ -119,7 +119,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                       }
                     }
                   }}
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                   placeholder="Project title"
                 />
               </div>
@@ -134,7 +134,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                   name="slug"
                   defaultValue={project?.slug}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                   placeholder="project-url-slug"
                 />
               </div>
@@ -149,7 +149,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                     name="service_type"
                     defaultValue={project?.service_type}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] bg-white"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] bg-white"
                   >
                     <option value="">Select service type</option>
                     {serviceTypes.filter(t => t !== 'Other').map((type) => (
@@ -170,7 +170,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                     name="location"
                     defaultValue={project?.location}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853]"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303]"
                     placeholder="City, State"
                   />
                 </div>
@@ -186,7 +186,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                   defaultValue={project?.description}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] resize-none"
                   placeholder="Project description..."
                 />
               </div>
@@ -198,7 +198,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                     name="featured"
                     value="true"
                     defaultChecked={project?.featured}
-                    className="w-4 h-4 text-[#d4a853] focus:ring-[#d4a853]"
+                    className="w-4 h-4 text-[#990303] focus:ring-[#990303]"
                   />
                   <span className="text-sm text-gray-700">Featured project</span>
                 </label>
@@ -209,7 +209,7 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                     name="is_published"
                     value="true"
                     defaultChecked={project?.is_published ?? true}
-                    className="w-4 h-4 text-[#d4a853] focus:ring-[#d4a853]"
+                    className="w-4 h-4 text-[#990303] focus:ring-[#990303]"
                   />
                   <span className="text-sm text-gray-700">Published</span>
                 </label>
@@ -219,11 +219,11 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-[#d4a853] hover:bg-[#c49943] disabled:bg-gray-400 text-[#1a1a2e] px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
+                  className="bg-[#990303] hover:bg-[#71706e] disabled:bg-gray-400 text-white border-2 border-white px-6 py-3 font-semibold flex items-center gap-2 transition-colors"
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="animate-spin w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full" />
+                      <span className="animate-spin w-5 h-5 border-2 border-[#292323] border-t-transparent rounded-full" />
                       Saving...
                     </>
                   ) : (
@@ -259,10 +259,10 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
                       disabled={uploadingImage}
                       className="hidden"
                     />
-                    <span className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 hover:border-[#d4a853] p-6 cursor-pointer transition-colors">
+                    <span className="flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 hover:border-[#990303] p-6 cursor-pointer transition-colors">
                       {uploadingImage ? (
                         <>
-                          <span className="animate-spin w-5 h-5 border-2 border-[#d4a853] border-t-transparent rounded-full" />
+                          <span className="animate-spin w-5 h-5 border-2 border-[#990303] border-t-transparent rounded-full" />
                           Uploading...
                         </>
                       ) : (
@@ -323,3 +323,4 @@ export default function ProjectFormClient({ project }: ProjectFormClientProps) {
     </>
   );
 }
+

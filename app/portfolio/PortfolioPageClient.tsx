@@ -24,8 +24,8 @@ export default function PortfolioPageClient({
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center bg-[#1a1a2e] pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44]" />
+      <section className="relative min-h-[50vh] flex items-center justify-center bg-[#292323] pt-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -57,7 +57,7 @@ export default function PortfolioPageClient({
               onClick={() => setActiveFilter(filter)}
               className={`px-5 py-2 font-medium transition-all ${
                 activeFilter === filter
-                  ? 'bg-[#1a1a2e] text-white'
+                  ? 'bg-[#292323] text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -105,7 +105,7 @@ export default function PortfolioPageClient({
           <motion.a
             href="/contact"
             whileHover={{ scale: 1.02 }}
-            className="inline-block bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-10 py-4 font-semibold text-lg transition-colors"
+            className="inline-block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-10 py-4 font-semibold text-lg transition-colors"
           >
             Start Your Project
           </motion.a>
@@ -114,3 +114,4 @@ export default function PortfolioPageClient({
     </>
   );
 }
+

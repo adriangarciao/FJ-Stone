@@ -30,7 +30,7 @@ export default function Hero({
         }}
       />
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-[#1a1a2e]/75" />
+      <div className="absolute inset-0 bg-[#292323]/75" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -61,13 +61,13 @@ export default function Hero({
           >
             <Link
               href="/portfolio"
-              className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1a1a2e] px-8 py-3.5 font-semibold transition-all"
+              className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#292323] px-8 py-3.5 font-semibold transition-all"
             >
               See Our Work
             </Link>
             <Link
               href="/contact"
-              className="w-full sm:w-auto bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-8 py-3.5 font-semibold transition-colors"
+              className="w-full sm:w-auto bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-8 py-3.5 font-semibold transition-colors"
             >
               Request a Quote
             </Link>
@@ -95,3 +95,4 @@ export default function Hero({
     </section>
   );
 }
+

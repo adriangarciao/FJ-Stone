@@ -61,7 +61,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
             onClick={() => setFilter(status)}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               filter === status
-                ? 'bg-[#1a1a2e] text-white'
+                ? 'bg-[#292323] text-white'
                 : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
             }`}
           >
@@ -98,7 +98,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                   <a
                     href={`tel:${quote.phone}`}
-                    className="flex items-center gap-1 hover:text-[#d4a853]"
+                    className="flex items-center gap-1 hover:text-[#990303]"
                   >
                     <Phone size={14} />
                     {quote.phone}
@@ -106,7 +106,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                   {quote.email && (
                     <a
                       href={`mailto:${quote.email}`}
-                      className="flex items-center gap-1 hover:text-[#d4a853]"
+                      className="flex items-center gap-1 hover:text-[#990303]"
                     >
                       <Mail size={14} />
                       {quote.email}
@@ -171,7 +171,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                   value={quote.status}
                   onChange={(e) => handleStatusChange(quote.id, e.target.value)}
                   disabled={updatingId === quote.id}
-                  className="px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#d4a853] disabled:opacity-50"
+                  className="px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#990303] disabled:opacity-50"
                 >
                   {statusOptions.map((status) => (
                     <option key={status} value={status}>
@@ -198,3 +198,4 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
     </>
   );
 }
+

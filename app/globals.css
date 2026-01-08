@@ -2,21 +2,21 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --primary: #1a1a2e;
-  --primary-light: #2d2d44;
-  --accent: #d4a853;
-  --accent-hover: #c49943;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  --foreground: #292323;
+  --primary: #292323;
+  --primary-light: #71706e;
+  --accent: #990303;
+  --accent-hover: #71706e;
+  --gray-50: #ffffff;
+  --gray-100: #9c9999;
+  --gray-200: #9c9999;
+  --gray-300: #9c9999;
+  --gray-400: #9c9999;
+  --gray-500: #71706e;
+  --gray-600: #71706e;
+  --gray-700: #71706e;
+  --gray-800: #292323;
+  --gray-900: #292323;
 }
 
 @theme inline {
@@ -58,3 +58,4 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gray-500);
 }
+

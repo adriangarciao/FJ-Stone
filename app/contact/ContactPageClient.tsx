@@ -88,15 +88,15 @@ export default function ContactPageClient({
   if (isSubmitted) {
     return (
       <>
-        <section className="relative min-h-[50vh] flex items-center justify-center bg-[#1a1a2e] pt-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44]" />
+        <section className="relative min-h-[50vh] flex items-center justify-center bg-[#292323] pt-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <CheckCircle size={64} className="text-[#d4a853] mx-auto mb-6" />
+              <CheckCircle size={64} className="text-[#990303] mx-auto mb-6" />
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                 Thank You!
               </h1>
@@ -116,13 +116,13 @@ export default function ContactPageClient({
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/portfolio"
-                className="bg-[#1a1a2e] hover:bg-[#2d2d44] text-white px-6 py-3 font-semibold transition-colors"
+                className="bg-[#292323] hover:bg-[#71706e] text-white px-6 py-3 font-semibold transition-colors"
               >
                 View Portfolio
               </Link>
               <Link
                 href="/services"
-                className="border-2 border-[#1a1a2e] text-[#1a1a2e] hover:bg-[#1a1a2e] hover:text-white px-6 py-3 font-semibold transition-all"
+                className="border-2 border-[#292323] text-[#292323] hover:bg-[#292323] hover:text-white px-6 py-3 font-semibold transition-all"
               >
                 Our Services
               </Link>
@@ -136,8 +136,8 @@ export default function ContactPageClient({
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center bg-[#1a1a2e] pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] to-[#2d2d44]" />
+      <section className="relative min-h-[40vh] flex items-center justify-center bg-[#292323] pt-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -182,12 +182,12 @@ export default function ContactPageClient({
                 href={`tel:${siteSettings.phone}`}
                 className="flex items-start gap-4 group"
               >
-                <div className="w-12 h-12 bg-[#d4a853]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#d4a853]/20 transition-colors">
-                  <Phone size={22} className="text-[#d4a853]" />
+                <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#990303]/20 transition-colors">
+                  <Phone size={22} className="text-[#990303]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Phone</p>
-                  <p className="text-gray-600 group-hover:text-[#d4a853] transition-colors">
+                  <p className="text-gray-600 group-hover:text-[#990303] transition-colors">
                     {siteSettings.phone}
                   </p>
                 </div>
@@ -197,20 +197,20 @@ export default function ContactPageClient({
                 href={`mailto:${siteSettings.email}`}
                 className="flex items-start gap-4 group"
               >
-                <div className="w-12 h-12 bg-[#d4a853]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#d4a853]/20 transition-colors">
-                  <Mail size={22} className="text-[#d4a853]" />
+                <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#990303]/20 transition-colors">
+                  <Mail size={22} className="text-[#990303]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Email</p>
-                  <p className="text-gray-600 group-hover:text-[#d4a853] transition-colors">
+                  <p className="text-gray-600 group-hover:text-[#990303] transition-colors">
                     {siteSettings.email}
                   </p>
                 </div>
               </a>
 
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#d4a853]/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin size={22} className="text-[#d4a853]" />
+                <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={22} className="text-[#990303]" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Service Area</p>
@@ -254,7 +254,7 @@ export default function ContactPageClient({
                       name="name"
                       className={`w-full px-4 py-3 border ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
-                      } focus:outline-none focus:border-[#d4a853] transition-colors`}
+                      } focus:outline-none focus:border-[#990303] transition-colors`}
                       placeholder="Your name"
                     />
                     {errors.name && (
@@ -276,7 +276,7 @@ export default function ContactPageClient({
                       name="phone"
                       className={`w-full px-4 py-3 border ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
-                      } focus:outline-none focus:border-[#d4a853] transition-colors`}
+                      } focus:outline-none focus:border-[#990303] transition-colors`}
                       placeholder="(555) 123-4567"
                     />
                     {errors.phone && (
@@ -300,7 +300,7 @@ export default function ContactPageClient({
                       name="email"
                       className={`w-full px-4 py-3 border ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
-                      } focus:outline-none focus:border-[#d4a853] transition-colors`}
+                      } focus:outline-none focus:border-[#990303] transition-colors`}
                       placeholder="your@email.com"
                     />
                     {errors.email && (
@@ -321,7 +321,7 @@ export default function ContactPageClient({
                       name="service_type"
                       className={`w-full px-4 py-3 border ${
                         errors.service_type ? 'border-red-500' : 'border-gray-300'
-                      } focus:outline-none focus:border-[#d4a853] transition-colors bg-white`}
+                      } focus:outline-none focus:border-[#990303] transition-colors bg-white`}
                     >
                       <option value="">Select a service</option>
                       {serviceTypes.map((type) => (
@@ -350,7 +350,7 @@ export default function ContactPageClient({
                     type="text"
                     id="location"
                     name="location"
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] transition-colors"
                     placeholder="City, State or Zip Code"
                   />
                 </div>
@@ -369,7 +369,7 @@ export default function ContactPageClient({
                     rows={5}
                     className={`w-full px-4 py-3 border ${
                       errors.description ? 'border-red-500' : 'border-gray-300'
-                    } focus:outline-none focus:border-[#d4a853] transition-colors resize-none`}
+                    } focus:outline-none focus:border-[#990303] transition-colors resize-none`}
                     placeholder="Tell us about your project..."
                   />
                   {errors.description && (
@@ -382,7 +382,7 @@ export default function ContactPageClient({
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Photos <span className="text-gray-400">(optional, max 5)</span>
                   </label>
-                  <div className="border-2 border-dashed border-gray-300 p-6 text-center hover:border-[#d4a853] transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 p-6 text-center hover:border-[#990303] transition-colors">
                     <input
                       type="file"
                       id="file-upload"
@@ -433,11 +433,11 @@ export default function ContactPageClient({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#d4a853] hover:bg-[#c49943] disabled:bg-gray-400 text-[#1a1a2e] px-8 py-4 font-semibold text-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-[#990303] hover:bg-[#71706e] disabled:bg-gray-400 text-white border-2 border-white px-8 py-4 font-semibold text-lg transition-colors flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
-                      <span className="animate-spin w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full" />
+                      <span className="animate-spin w-5 h-5 border-2 border-[#292323] border-t-transparent rounded-full" />
                       Submitting...
                     </>
                   ) : (
@@ -455,3 +455,4 @@ export default function ContactPageClient({
     </>
   );
 }
+

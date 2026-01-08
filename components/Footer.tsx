@@ -38,13 +38,13 @@ export default function Footer({ siteSettings }: FooterProps) {
   };
 
   return (
-    <footer className="bg-[#1a1a2e] text-white">
+    <footer className="bg-[#292323] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div>
             <h3 className="text-2xl font-bold mb-4">
-              FJ<span className="text-[#d4a853]">Stone</span>
+              FJ<span className="text-[#990303]">Stone</span>
             </h3>
             <p className="text-gray-400 mb-6">
               Expert hardscaping and stonework for residential and commercial properties.
@@ -53,14 +53,14 @@ export default function Footer({ siteSettings }: FooterProps) {
             <div className="space-y-3">
               <a
                 href={`tel:${settings.phone}`}
-                className="flex items-center gap-3 text-gray-400 hover:text-[#d4a853] transition-colors"
+                className="flex items-center gap-3 text-gray-400 hover:text-[#990303] transition-colors"
               >
                 <Phone size={18} />
                 {settings.phone}
               </a>
               <a
                 href={`mailto:${settings.email}`}
-                className="flex items-center gap-3 text-gray-400 hover:text-[#d4a853] transition-colors"
+                className="flex items-center gap-3 text-gray-400 hover:text-[#990303] transition-colors"
               >
                 <Mail size={18} />
                 {settings.email}
@@ -80,7 +80,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-[#d4a853] transition-colors"
+                    className="text-gray-400 hover:text-[#990303] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -97,7 +97,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-[#d4a853] transition-colors"
+                    className="text-gray-400 hover:text-[#990303] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -114,7 +114,7 @@ export default function Footer({ siteSettings }: FooterProps) {
             </p>
             <Link
               href="/contact"
-              className="inline-block bg-[#d4a853] hover:bg-[#c49943] text-[#1a1a2e] px-6 py-3 font-semibold transition-colors"
+              className="inline-block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-6 py-3 font-semibold transition-colors"
             >
               Request a Quote
             </Link>
@@ -128,7 +128,7 @@ export default function Footer({ siteSettings }: FooterProps) {
           </p>
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-gray-400 hover:text-[#d4a853] transition-colors"
+            className="flex items-center gap-2 text-gray-400 hover:text-[#990303] transition-colors"
             aria-label="Back to top"
           >
             <span className="text-sm">Back to top</span>
@@ -139,3 +139,4 @@ export default function Footer({ siteSettings }: FooterProps) {
     </footer>
   );
 }
+

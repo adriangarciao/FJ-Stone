@@ -47,8 +47,8 @@ export default function AdminLoginPage() {
       >
         <div className="bg-white border border-gray-200 p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-[#1a1a2e] flex items-center justify-center mx-auto mb-4">
-              <Lock size={28} className="text-[#d4a853]" />
+            <div className="w-16 h-16 bg-[#292323] flex items-center justify-center mx-auto mb-4">
+              <Lock size={28} className="text-[#990303]" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
             <p className="text-gray-600 mt-2">
@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] transition-colors"
                   placeholder="admin@example.com"
                   required
                 />
@@ -105,7 +105,7 @@ export default function AdminLoginPage() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] transition-colors"
                   placeholder="********"
                   required
                 />
@@ -115,11 +115,11 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#d4a853] hover:bg-[#c49943] disabled:bg-gray-400 text-[#1a1a2e] px-6 py-3 font-semibold transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-[#990303] hover:bg-[#71706e] disabled:bg-gray-400 text-white border-2 border-white px-6 py-3 font-semibold transition-colors flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
-                  <span className="animate-spin w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full" />
+                  <span className="animate-spin w-5 h-5 border-2 border-[#292323] border-t-transparent rounded-full" />
                   Signing in...
                 </>
               ) : (
@@ -130,7 +130,7 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="text-center text-gray-500 text-sm mt-6">
-          <Link href="/" className="hover:text-[#d4a853] transition-colors">
+          <Link href="/" className="hover:text-[#990303] transition-colors">
             Back to website
           </Link>
         </p>
@@ -138,3 +138,4 @@ export default function AdminLoginPage() {
     </div>
   );
 }
+
