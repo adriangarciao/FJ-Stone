@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, CheckCircle, Upload, X } from 'lucide-react';
 import { Section } from '@/components';
@@ -113,18 +114,18 @@ export default function ContactPageClient({
               our services.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
+              <Link
                 href="/portfolio"
                 className="bg-[#1a1a2e] hover:bg-[#2d2d44] text-white px-6 py-3 font-semibold transition-colors"
               >
                 View Portfolio
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/services"
                 className="border-2 border-[#1a1a2e] text-[#1a1a2e] hover:bg-[#1a1a2e] hover:text-white px-6 py-3 font-semibold transition-all"
               >
                 Our Services
-              </a>
+              </Link>
             </div>
           </div>
         </Section>

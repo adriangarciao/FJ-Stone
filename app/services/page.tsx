@@ -12,7 +12,7 @@ import {
   Check,
   ArrowRight,
 } from 'lucide-react';
-import { Section, SectionHeader } from '@/components';
+import { Section } from '@/components';
 import { services } from '@/lib/dummy-data';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {

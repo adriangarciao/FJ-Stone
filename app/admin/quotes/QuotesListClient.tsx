@@ -189,7 +189,9 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
 
         {filteredQuotes.length === 0 && (
           <div className="bg-white border border-gray-200 p-12 text-center">
-            <p className="text-gray-500">No quotes with status "{filter}"</p>
+            <p className="text-gray-500">
+              No quotes with status &quot;{filter}&quot;
+            </p>
           </div>
         )}
       </div>

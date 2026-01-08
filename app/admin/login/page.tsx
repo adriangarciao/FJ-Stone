@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
@@ -105,7 +106,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 focus:outline-none focus:border-[#d4a853] transition-colors"
-                  placeholder="••••••••"
+                  placeholder="********"
                   required
                 />
               </div>
@@ -129,9 +130,9 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="text-center text-gray-500 text-sm mt-6">
-          <a href="/" className="hover:text-[#d4a853] transition-colors">
-            ← Back to website
-          </a>
+          <Link href="/" className="hover:text-[#d4a853] transition-colors">
+            Back to website
+          </Link>
         </p>
       </motion.div>
     </div>

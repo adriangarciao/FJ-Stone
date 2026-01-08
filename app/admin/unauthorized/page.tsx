@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { ShieldX } from 'lucide-react';
@@ -37,12 +38,12 @@ export default function UnauthorizedPage() {
           >
             Sign Out
           </button>
-          <a
+          <Link
             href="/"
             className="border-2 border-[#1a1a2e] text-[#1a1a2e] hover:bg-[#1a1a2e] hover:text-white px-6 py-3 font-semibold transition-all"
           >
             Go to Website
-          </a>
+          </Link>
         </div>
       </motion.div>
     </div>

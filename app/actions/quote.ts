@@ -2,7 +2,6 @@
 
 import { createClient, createServiceClient } from '@/lib/supabase/server';
 import { quoteRequestSchema } from '@/lib/validations';
-import { revalidatePath } from 'next/cache';
 
 export interface QuoteSubmissionResult {
   success: boolean;

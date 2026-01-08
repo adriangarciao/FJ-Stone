@@ -1,6 +1,6 @@
 import 'server-only';
 import { createClient } from './server';
-import type { Project, Review, SiteSettings, ProjectImage } from '../types';
+import type { Project, Review, SiteSettings } from '../types';
 
 // Default site settings fallback
 const defaultSiteSettings: SiteSettings = {
