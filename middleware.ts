@@ -2,6 +2,10 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -30,9 +34,15 @@ export async function middleware(request: NextRequest) {
   );
 
   // Refresh session if expired
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const {
+      data: { user: fetchedUser },
+    } = await supabase.auth.getUser();
+    user = fetchedUser;
+  } catch (error) {
+    console.warn('Supabase auth refresh failed:', error);
+  }
 
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith('/admin')) {
