@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'FJ Stone & Hardscaping | Expert Stonework & Outdoor Living',
+  title: "F&J's Stone Services | Expert Stonework & Outdoor Living",
   description:
     'Expert hardscaping, patios, retaining walls, and stonework for residential and commercial properties. Quality craftsmanship built to last.',
   keywords: [

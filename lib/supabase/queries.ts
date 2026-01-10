@@ -1,14 +1,15 @@
 import 'server-only';
 import { createClient } from './server';
 import type { Project, Review, SiteSettings } from '../types';
+import { portfolioProjects, getFeaturedPortfolioProjects } from '@/src/data/portfolioImages';
 
 // Default site settings fallback
 const defaultSiteSettings: SiteSettings = {
   id: 1,
-  business_name: 'FJ Stone & Hardscaping',
-  phone: '(555) 123-4567',
-  email: 'info@fjstone.com',
-  service_area: 'Greater Metro Area',
+  business_name: "F&J's Stone Services",
+  phone: '(847) 847-9376',
+  email: 'fjstoneservices@gmail.com',
+  service_area: 'Greater Chicago Area',
   hero_headline: 'Crafting Outdoor Spaces That Last',
   hero_subheadline: 'Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time.',
   updated_at: new Date().toISOString(),
@@ -42,9 +43,10 @@ export async function getPublishedProjects(): Promise<Project[]> {
       .eq('is_published', true)
       .order('created_at', { ascending: false });
 
-    if (error || !projects) {
-      console.error('Error fetching projects:', error);
-      return [];
+    if (error || !projects || projects.length === 0) {
+      // Fallback to local portfolio data
+      console.log('Using local portfolio data');
+      return portfolioProjects;
     }
 
     // Fetch images for each project
@@ -65,7 +67,8 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
     return projectsWithImages;
   } catch {
-    return [];
+    // Fallback to local portfolio data
+    return portfolioProjects;
   }
 }
 
@@ -80,9 +83,9 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       .order('created_at', { ascending: false })
       .limit(6);
 
-    if (error || !projects) {
-      console.error('Error fetching featured projects:', error);
-      return [];
+    if (error || !projects || projects.length === 0) {
+      // Fallback to local portfolio data
+      return getFeaturedPortfolioProjects();
     }
 
     // Fetch images for each project
@@ -104,7 +107,8 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
     return projectsWithImages;
   } catch {
-    return [];
+    // Fallback to local portfolio data
+    return getFeaturedPortfolioProjects();
   }
 }
 
@@ -119,7 +123,9 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       .single();
 
     if (error || !project) {
-      return null;
+      // Fallback to local portfolio data
+      const localProject = portfolioProjects.find(p => p.slug === slug);
+      return localProject || null;
     }
 
     // Fetch images for the project
@@ -134,7 +140,9 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       images: images || [],
     } as Project;
   } catch {
-    return null;
+    // Fallback to local portfolio data
+    const localProject = portfolioProjects.find(p => p.slug === slug);
+    return localProject || null;
   }
 }
 

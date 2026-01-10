@@ -28,10 +28,10 @@ $$;
 -- 3. Create site_settings table (single row)
 CREATE TABLE IF NOT EXISTS public.site_settings (
   id int PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  business_name text NOT NULL DEFAULT 'FJ Stone & Hardscaping',
-  phone text NOT NULL DEFAULT '(555) 123-4567',
-  email text NOT NULL DEFAULT 'info@fjstone.com',
-  service_area text NOT NULL DEFAULT 'Greater Metro Area',
+  business_name text NOT NULL DEFAULT 'F&J''s Stone Services',
+  phone text NOT NULL DEFAULT '(847) 847-9376',
+  email text NOT NULL DEFAULT 'fjstoneservices@gmail.com',
+  service_area text NOT NULL DEFAULT 'Greater Chicago Area',
   hero_headline text NOT NULL DEFAULT 'Crafting Outdoor Spaces That Last',
   hero_subheadline text NOT NULL DEFAULT 'Expert hardscaping, patios, and stonework for residential and commercial properties.',
   updated_at timestamptz DEFAULT now()

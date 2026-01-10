@@ -1,11 +1,12 @@
-import { Project, Review, SiteSettings, Service } from './types';
+import { Review, SiteSettings, Service } from './types';
+import { portfolioProjects, getCategories } from '@/src/data/portfolioImages';
 
 export const siteSettings: SiteSettings = {
   id: 1,
-  business_name: 'FJ Stone & Hardscaping',
-  phone: '(555) 123-4567',
-  email: 'info@fjstone.com',
-  service_area: 'Greater Metro Area',
+  business_name: "F&J's Stone Services",
+  phone: '(847) 847-9376',
+  email: 'fjstoneservices@gmail.com',
+  service_area: 'Greater Chicago Area',
   hero_headline: 'Crafting Outdoor Spaces That Last',
   hero_subheadline: 'Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time.',
   updated_at: new Date().toISOString(),
@@ -86,92 +87,8 @@ export const services: Service[] = [
   },
 ];
 
-export const projects: Project[] = [
-  {
-    id: '1',
-    title: 'Modern Paver Patio with Fire Pit',
-    slug: 'modern-paver-patio-fire-pit',
-    location: 'Westchester, NY',
-    service_type: 'Patio',
-    description: 'A stunning 800 sq ft paver patio featuring a custom gas fire pit and integrated seating wall. The geometric pattern creates visual interest while the neutral tones complement the home\'s modern architecture.',
-    featured: true,
-    is_published: true,
-    created_at: '2024-09-15T00:00:00Z',
-    images: [
-      { id: '1', project_id: '1', storage_path: '/images/projects/patio-1.jpg', caption: 'Completed patio with fire pit', sort_order: 0, created_at: '2024-09-15T00:00:00Z' },
-    ],
-  },
-  {
-    id: '2',
-    title: 'Natural Stone Retaining Wall',
-    slug: 'natural-stone-retaining-wall',
-    location: 'Greenwich, CT',
-    service_type: 'Retaining Wall',
-    description: 'A 150 linear foot natural fieldstone retaining wall that transformed a steep slope into a beautiful terraced garden. Multiple tiers create planting areas while managing drainage.',
-    featured: true,
-    is_published: true,
-    created_at: '2024-08-20T00:00:00Z',
-    images: [
-      { id: '2', project_id: '2', storage_path: '/images/projects/wall-1.jpg', caption: 'Completed retaining wall', sort_order: 0, created_at: '2024-08-20T00:00:00Z' },
-    ],
-  },
-  {
-    id: '3',
-    title: 'Flagstone Walkway & Garden Path',
-    slug: 'flagstone-walkway-garden-path',
-    location: 'Stamford, CT',
-    service_type: 'Walkway',
-    description: 'An elegant meandering flagstone path through a mature garden, connecting the main house to a detached studio. Natural joints filled with creeping thyme add charm.',
-    featured: true,
-    is_published: true,
-    created_at: '2024-07-10T00:00:00Z',
-    images: [
-      { id: '3', project_id: '3', storage_path: '/images/projects/walkway-1.jpg', caption: 'Flagstone path through garden', sort_order: 0, created_at: '2024-07-10T00:00:00Z' },
-    ],
-  },
-  {
-    id: '4',
-    title: 'Paver Driveway with Border',
-    slug: 'paver-driveway-border',
-    location: 'Rye, NY',
-    service_type: 'Driveway',
-    description: 'A complete driveway replacement using interlocking concrete pavers with a contrasting border pattern. Includes integrated drainage system and LED accent lighting.',
-    featured: true,
-    is_published: true,
-    created_at: '2024-06-05T00:00:00Z',
-    images: [
-      { id: '4', project_id: '4', storage_path: '/images/projects/driveway-1.jpg', caption: 'Paver driveway', sort_order: 0, created_at: '2024-06-05T00:00:00Z' },
-    ],
-  },
-  {
-    id: '5',
-    title: 'Complete Outdoor Kitchen',
-    slug: 'complete-outdoor-kitchen',
-    location: 'Darien, CT',
-    service_type: 'Outdoor Kitchen',
-    description: 'A full outdoor kitchen featuring granite countertops, built-in gas grill, sink, refrigerator, and pizza oven. The stone veneer matches the home\'s existing facade.',
-    featured: false,
-    is_published: true,
-    created_at: '2024-05-15T00:00:00Z',
-    images: [
-      { id: '5', project_id: '5', storage_path: '/images/projects/kitchen-1.jpg', caption: 'Outdoor kitchen', sort_order: 0, created_at: '2024-05-15T00:00:00Z' },
-    ],
-  },
-  {
-    id: '6',
-    title: 'Stone Fire Pit with Seating',
-    slug: 'stone-fire-pit-seating',
-    location: 'New Canaan, CT',
-    service_type: 'Fire Feature',
-    description: 'A circular natural stone fire pit surrounded by a curved seating wall. The space includes built-in storage and accent lighting for evening gatherings.',
-    featured: false,
-    is_published: true,
-    created_at: '2024-04-20T00:00:00Z',
-    images: [
-      { id: '6', project_id: '6', storage_path: '/images/projects/firepit-1.jpg', caption: 'Stone fire pit', sort_order: 0, created_at: '2024-04-20T00:00:00Z' },
-    ],
-  },
-];
+// Re-export portfolio projects as the main projects array
+export const projects = portfolioProjects;
 
 export const reviews: Review[] = [
   {
@@ -216,12 +133,5 @@ export const reviews: Review[] = [
   },
 ];
 
-export const serviceTypes = [
-  'Patio',
-  'Retaining Wall',
-  'Walkway',
-  'Driveway',
-  'Outdoor Kitchen',
-  'Fire Feature',
-  'Other',
-];
+// Service types derived from actual project categories
+export const serviceTypes = getCategories();

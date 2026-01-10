@@ -5,3 +5,4 @@ export { default as Section, SectionHeader } from './Section';
 export { default as ServiceCard } from './ServiceCard';
 export { default as ProjectCard } from './ProjectCard';
 export { default as ReviewCard } from './ReviewCard';
+export { default as ImageLightbox } from './ImageLightbox';

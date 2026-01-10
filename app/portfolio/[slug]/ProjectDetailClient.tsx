@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
-import { Section } from '@/components';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { Section, ImageLightbox } from '@/components';
 import { getProjectImageUrl } from '@/lib/supabase/storage';
 import type { Project } from '@/lib/types';
 
@@ -19,27 +19,39 @@ export default function ProjectDetailClient({
   relatedProjects,
 }: ProjectDetailClientProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxInitialIndex, setLightboxInitialIndex] = useState(0);
 
   const images = project.images || [];
   const hasMultipleImages = images.length > 1;
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-  };
+  const openLightbox = useCallback((index: number) => {
+    setLightboxInitialIndex(index);
+    setLightboxOpen(true);
+  }, []);
 
-  const prevImage = () => {
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const prevImage = useCallback(() => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
   const currentImage = images[currentImageIndex];
   const currentImageUrl = currentImage
     ? getProjectImageUrl(currentImage.storage_path)
     : null;
+  const lightboxImages = images.map((image) => ({
+    src: getProjectImageUrl(image.storage_path),
+    alt: image.caption || project.title,
+    caption: image.caption || undefined,
+  }));
 
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-end bg-[#292323] pt-20">
+      <section className="relative min-h-[50vh] flex items-end bg-[#292323] pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
         <div className="relative z-10 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -47,24 +59,23 @@ export default function ProjectDetailClient({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="text-center"
             >
               <Link
                 href="/portfolio"
-                className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors"
+                className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors"
               >
                 <ArrowLeft size={18} className="mr-2" />
                 Back to Portfolio
               </Link>
-              <span className="inline-block bg-[#990303] text-white border-2 border-white text-sm font-semibold px-3 py-1 mb-4">
-                {project.service_type}
-              </span>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              <div className="mt-4">
+                <span className="inline-block bg-[#990303] text-white border-2 border-white text-sm font-semibold px-3 py-1 mb-4">
+                  {project.service_type}
+                </span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
                 {project.title}
               </h1>
-              <div className="flex items-center text-gray-300">
-                <MapPin size={18} className="mr-2" />
-                {project.location}
-              </div>
             </motion.div>
           </div>
         </div>
@@ -80,7 +91,14 @@ export default function ProjectDetailClient({
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center overflow-hidden">
+            <div
+              className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center overflow-hidden cursor-pointer"
+              onClick={() => {
+                if (images.length > 0) {
+                  openLightbox(currentImageIndex);
+                }
+              }}
+            >
               {currentImageUrl ? (
                 <Image
                   src={currentImageUrl}
@@ -96,17 +114,23 @@ export default function ProjectDetailClient({
               )}
 
               {/* Navigation Arrows */}
-              {hasMultipleImages && (
+              {!lightboxOpen && hasMultipleImages && (
                 <>
                   <button
-                    onClick={prevImage}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
                     className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-10"
                     aria-label="Previous image"
                   >
                     <ChevronLeft size={24} className="text-[#292323]" />
                   </button>
                   <button
-                    onClick={nextImage}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
                     className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white flex items-center justify-center transition-colors z-10"
                     aria-label="Next image"
                   >
@@ -117,7 +141,7 @@ export default function ProjectDetailClient({
             </div>
 
             {/* Image Dots */}
-            {hasMultipleImages && (
+            {!lightboxOpen && hasMultipleImages && (
               <div className="flex justify-center gap-2 mt-4">
                 {images.map((_, index) => (
                   <button
@@ -133,11 +157,12 @@ export default function ProjectDetailClient({
             )}
 
             {/* Caption */}
-            {currentImage?.caption && (
+            {!lightboxOpen && currentImage?.caption && (
               <p className="text-center text-gray-500 text-sm mt-2">
                 {currentImage.caption}
               </p>
             )}
+
           </motion.div>
 
           {/* Project Details */}
@@ -160,21 +185,14 @@ export default function ProjectDetailClient({
                   {project.service_type}
                 </span>
               </div>
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                <span className="text-gray-500">Location</span>
-                <span className="font-semibold text-gray-900">
-                  {project.location}
-                </span>
-              </div>
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                <span className="text-gray-500">Completed</span>
-                <span className="font-semibold text-gray-900">
-                  {new Date(project.created_at).toLocaleDateString('en-US', {
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </span>
-              </div>
+              {images.length > 0 && (
+                <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                  <span className="text-gray-500">Photos</span>
+                  <span className="font-semibold text-gray-900">
+                    {images.length} {images.length === 1 ? 'image' : 'images'}
+                  </span>
+                </div>
+              )}
             </div>
 
             <Link
@@ -231,14 +249,19 @@ export default function ProjectDetailClient({
                   <h3 className="font-bold text-gray-900 group-hover:text-[#990303] transition-colors">
                     {relatedProject.title}
                   </h3>
-                  <p className="text-gray-500 text-sm">{relatedProject.location}</p>
                 </Link>
               );
             })}
           </div>
         </Section>
       )}
+
+      <ImageLightbox
+        images={lightboxImages}
+        initialIndex={lightboxInitialIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </>
   );
 }
-
