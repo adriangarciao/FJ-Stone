@@ -20,13 +20,13 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className={`relative ${minHeight} flex items-center overflow-hidden pt-20`}
+      className={`relative ${minHeight} flex items-center overflow-hidden`}
     >
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Logo */}
           <motion.div
