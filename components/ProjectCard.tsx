@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import Image from 'next/image';
 import { Project } from '@/lib/types';
 
 interface ProjectCardProps {
@@ -11,6 +11,11 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
+  // Get the first image from the project, or use a placeholder
+  const firstImage = project.images?.[0];
+  const imageSrc = firstImage?.storage_path || '/images/placeholder.jpg';
+  const imageAlt = firstImage?.caption || project.title;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,10 +29,14 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           transition={{ duration: 0.2 }}
           className="relative overflow-hidden bg-gray-200 aspect-[4/3]"
         >
-          {/* Placeholder image - replace with actual images */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center">
-            <span className="text-white/30 text-sm">Project Image</span>
-          </div>
+          {/* Project Image */}
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
 
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-[#292323]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -48,13 +57,8 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#990303] transition-colors">
             {project.title}
           </h3>
-          <div className="flex items-center text-gray-500 text-sm mt-1">
-            <MapPin size={14} className="mr-1" />
-            {project.location}
-          </div>
         </div>
       </Link>
     </motion.div>
   );
 }
-

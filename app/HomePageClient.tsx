@@ -42,6 +42,7 @@ export default function HomePageClient({
         headline={siteSettings.hero_headline}
         subheadline={siteSettings.hero_subheadline}
         showCTAs={true}
+        logoImage="/images/fj_logo.png"
       />
 
       {/* Services Section */}
@@ -71,7 +72,7 @@ export default function HomePageClient({
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <SectionHeader
-              title="Why Choose FJ Stone"
+              title="Why Choose F&J's Stone Services"
               subtitle="We combine traditional craftsmanship with modern techniques to deliver outdoor spaces that exceed expectations."
               centered={false}
             />
@@ -86,7 +87,7 @@ export default function HomePageClient({
                   className="flex items-start gap-3"
                 >
                   <div className="w-6 h-6 bg-[#990303] flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check size={16} className="text-[#292323]" />
+                    <Check size={16} className="text-white" />
                   </div>
                   <span className="text-gray-700">{item}</span>
                 </motion.li>
@@ -98,9 +99,14 @@ export default function HomePageClient({
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center"
+            className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center p-8"
           >
-            <span className="text-white/30 text-sm">Company Image</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/fj_logo.png"
+              alt="F&J's Stone Services Logo"
+              className="max-w-full max-h-full object-contain"
+            />
           </motion.div>
         </div>
       </Section>

@@ -24,6 +24,16 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   'flame-kindling': Sparkles,
 };
 
+// Map service titles to portfolio images
+const serviceImages: Record<string, { src: string; position?: string }> = {
+  'Patio Installation': { src: '/images/158AC9A7-D459-4A8D-8D0A-7236EBF09AB8_1_105_c.jpeg' },
+  'Retaining Walls': { src: '/images/7AFB6119-69B5-442B-8612-EA9ADE730550_4_5005_c.jpeg' },
+  'Walkways & Paths': { src: '/images/5E3D4375-386D-4C1F-AC5F-36319F98C214_1_105_c.jpeg' },
+  'Driveways': { src: '/images/73A1BE3C-0FE1-461F-AF66-2AEE21419E70_1_105_c.jpeg' },
+  'Outdoor Kitchens': { src: '/images/9DF216A3-CFE2-4925-99B6-9D515C92B6F0_1_105_c.jpeg' },
+  'Fire Features': { src: '/images/0834B227-14FC-4BBC-8EA1-FFA883885AA5_1_105_c.jpeg' },
+};
+
 export default function ServicesPage() {
   return (
     <>
@@ -83,7 +93,7 @@ export default function ServicesPage() {
                   {service.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <div className="w-5 h-5 bg-[#990303] flex items-center justify-center flex-shrink-0">
-                        <Check size={14} className="text-[#292323]" />
+                        <Check size={14} className="text-white" />
                       </div>
                       <span className="text-gray-700">{feature}</span>
                     </li>
@@ -103,9 +113,14 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className={`relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center ${isEven ? '' : 'lg:order-1'}`}
+                className={`relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center overflow-hidden ${isEven ? '' : 'lg:order-1'}`}
               >
-                <span className="text-white/30 text-sm">Service Image</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={serviceImages[service.title]?.src}
+                  alt={service.title}
+                  className={`w-full h-full object-cover ${serviceImages[service.title]?.position || ''}`}
+                />
               </motion.div>
             </div>
           </Section>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -25,14 +24,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#292323]/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+        isScrolled ? 'bg-[#292323]/95 shadow-lg' : 'bg-transparent'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,7 +34,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold text-white tracking-tight">
-              FJ<span className="text-[#990303]">Stone</span>
+              F&J&apos;s <span className="text-[#990303]">Stone Services</span>
             </span>
           </Link>
 
@@ -75,12 +69,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-[#292323]/95 backdrop-blur-md"
-          >
+          <div className="md:hidden bg-[#292323]/95">
             <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (
                 <Link
@@ -100,10 +89,10 @@ export default function Navbar() {
                 Contact Us
               </Link>
             </div>
-          </motion.div>
+          </div>
         )}
       </nav>
-    </motion.header>
+    </header>
   );
 }
 

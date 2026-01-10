@@ -24,14 +24,20 @@ interface FooterProps {
 
 // Default values for fallback
 const defaultSettings = {
-  business_name: 'FJ Stone & Hardscaping',
-  phone: '(555) 123-4567',
-  email: 'info@fjstone.com',
-  service_area: 'Greater Metro Area',
+  business_name: "F&J's Stone Services",
+  phone: '(847) 847-9376',
+  email: 'fjstoneservices@gmail.com',
+  service_area: 'Greater Chicago Area',
 };
 
 export default function Footer({ siteSettings }: FooterProps) {
-  const settings = siteSettings || defaultSettings;
+  // Merge with defaults to handle empty values from database
+  const settings = {
+    business_name: siteSettings?.business_name || defaultSettings.business_name,
+    phone: siteSettings?.phone || defaultSettings.phone,
+    email: siteSettings?.email || defaultSettings.email,
+    service_area: siteSettings?.service_area || defaultSettings.service_area,
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -44,7 +50,7 @@ export default function Footer({ siteSettings }: FooterProps) {
           {/* Company Info */}
           <div>
             <h3 className="text-2xl font-bold mb-4">
-              FJ<span className="text-[#990303]">Stone</span>
+              F&J&apos;s <span className="text-[#990303]">Stone Services</span>
             </h3>
             <p className="text-gray-400 mb-6">
               Expert hardscaping and stonework for residential and commercial properties.

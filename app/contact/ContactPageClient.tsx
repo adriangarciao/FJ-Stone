@@ -14,10 +14,24 @@ interface ContactPageClientProps {
   serviceTypes: string[];
 }
 
+// Default values for fallback
+const defaultSettings = {
+  phone: '(847) 847-9376',
+  email: 'fjstoneservices@gmail.com',
+  service_area: 'Greater Chicago Area',
+};
+
 export default function ContactPageClient({
   siteSettings,
   serviceTypes,
 }: ContactPageClientProps) {
+  // Merge with defaults to handle empty values from database
+  const settings = {
+    phone: siteSettings?.phone || defaultSettings.phone,
+    email: siteSettings?.email || defaultSettings.email,
+    service_area: siteSettings?.service_area || defaultSettings.service_area,
+  };
+
   const formRef = useRef<HTMLFormElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -179,7 +193,7 @@ export default function ContactPageClient({
 
             <div className="space-y-6">
               <a
-                href={`tel:${siteSettings.phone}`}
+                href={`tel:${settings.phone}`}
                 className="flex items-start gap-4 group"
               >
                 <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#990303]/20 transition-colors">
@@ -188,13 +202,13 @@ export default function ContactPageClient({
                 <div>
                   <p className="font-semibold text-gray-900">Phone</p>
                   <p className="text-gray-600 group-hover:text-[#990303] transition-colors">
-                    {siteSettings.phone}
+                    {settings.phone}
                   </p>
                 </div>
               </a>
 
               <a
-                href={`mailto:${siteSettings.email}`}
+                href={`mailto:${settings.email}`}
                 className="flex items-start gap-4 group"
               >
                 <div className="w-12 h-12 bg-[#990303]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#990303]/20 transition-colors">
@@ -203,7 +217,7 @@ export default function ContactPageClient({
                 <div>
                   <p className="font-semibold text-gray-900">Email</p>
                   <p className="text-gray-600 group-hover:text-[#990303] transition-colors">
-                    {siteSettings.email}
+                    {settings.email}
                   </p>
                 </div>
               </a>
@@ -214,7 +228,7 @@ export default function ContactPageClient({
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">Service Area</p>
-                  <p className="text-gray-600">{siteSettings.service_area}</p>
+                  <p className="text-gray-600">{settings.service_area}</p>
                 </div>
               </div>
             </div>
