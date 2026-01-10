@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
@@ -28,13 +28,20 @@ export default function ImageLightbox({
   initialIndex,
   onClose,
 }: ImageLightboxProps) {
-  const [index, setIndex] = useState(0);
+  // Compute normalized initial index
+  const normalizedInitialIndex = useMemo(
+    () => normalizeIndex(initialIndex, images.length),
+    [initialIndex, images.length]
+  );
+  
+  // State for current index, reset when initialIndex changes via key in parent or direct prop change
+  const [index, setIndex] = useState(normalizedInitialIndex);
   const hasMultipleImages = images.length > 1;
 
+  // Sync index when initialIndex prop changes (e.g., clicking different image)
   useEffect(() => {
-    if (!isOpen) return;
-    setIndex(normalizeIndex(initialIndex, images.length));
-  }, [isOpen, initialIndex, images.length]);
+    setIndex(normalizedInitialIndex);
+  }, [normalizedInitialIndex]);
 
   useEffect(() => {
     if (!isOpen) return;
