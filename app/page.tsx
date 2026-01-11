@@ -3,7 +3,7 @@ import {
   getFeaturedProjects,
   getFeaturedReviews,
 } from '@/lib/supabase/queries';
-import { getContentBlocks, getBlockText } from '@/lib/supabase/content-queries';
+import { getContentBlocks } from '@/lib/supabase/content-queries';
 import { services } from '@/lib/dummy-data';
 import HomePageClient from './HomePageClient';
 

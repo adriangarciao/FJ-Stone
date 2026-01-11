@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, CheckCircle, Upload, X } from 'lucide-react';
 import { Section } from '@/components';
 import { submitQuoteRequest } from '@/app/actions/quote';
-import { quoteRequestSchema, validateFile, FILE_CONSTRAINTS, normalizePhone } from '@/lib/validations';
+import { quoteRequestSchema, validateFile, FILE_CONSTRAINTS } from '@/lib/validations';
 import type { SiteSettings } from '@/lib/types';
 
 interface ContactPageClientProps {
@@ -72,9 +72,10 @@ export default function ContactPageClient({
   };
 
   const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setFiles((prev) => prev.filter((_file, i) => i !== index));
     setErrors((prev) => {
-      const { files: _, ...rest } = prev;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { files: _filesError, ...rest } = prev;
       return rest;
     });
   };

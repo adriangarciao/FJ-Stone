@@ -5,10 +5,9 @@ import {
   useContext,
   useState,
   useCallback,
-  useEffect,
   type ReactNode,
 } from 'react';
-import type { ContentBlock, ContentBlockType } from '@/lib/types';
+import type { ContentBlock } from '@/lib/types';
 
 interface EditModeContextType {
   isEditMode: boolean;
@@ -49,18 +48,16 @@ export function EditModeProvider({
   children,
   initialIsAdmin = false,
 }: EditModeProviderProps) {
-  const [isEditMode, setIsEditMode] = useState(false);
+  // Initialize edit mode from sessionStorage if admin
+  const [isEditMode, setIsEditMode] = useState(() => {
+    if (typeof window !== 'undefined' && initialIsAdmin) {
+      return sessionStorage.getItem('editMode') === 'true';
+    }
+    return false;
+  });
   const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
   const [activeBlock, setActiveBlock] = useState<ContentBlock | null>(null);
   const [pendingUpdates, setPendingUpdates] = useState<Record<string, ContentBlock>>({});
-
-  // Persist edit mode preference in sessionStorage
-  useEffect(() => {
-    const stored = sessionStorage.getItem('editMode');
-    if (stored === 'true' && isAdmin) {
-      setIsEditMode(true);
-    }
-  }, [isAdmin]);
 
   const toggleEditMode = useCallback(() => {
     setIsEditMode((prev) => {
