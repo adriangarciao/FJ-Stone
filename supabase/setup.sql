@@ -81,8 +81,11 @@ CREATE TABLE IF NOT EXISTS public.quote_requests (
   service_type text NOT NULL,
   location text,
   description text NOT NULL,
+  preferred_contact text,
   status text DEFAULT 'NEW' CHECK (status IN ('NEW', 'CONTACTED', 'SCHEDULED', 'WON', 'LOST')),
   notes text,
+  source_ip text,
+  user_agent text,
   created_at timestamptz DEFAULT now()
 );
 
@@ -91,9 +94,19 @@ CREATE TABLE IF NOT EXISTS public.quote_request_files (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   quote_request_id uuid REFERENCES public.quote_requests(id) ON DELETE CASCADE,
   storage_path text NOT NULL,
-  file_name text NOT NULL,
+  original_name text NOT NULL,
+  mime_type text,
+  size_bytes bigint,
   created_at timestamptz DEFAULT now()
 );
+
+-- Migration for existing tables (run if tables already exist):
+-- ALTER TABLE public.quote_requests ADD COLUMN IF NOT EXISTS preferred_contact text;
+-- ALTER TABLE public.quote_requests ADD COLUMN IF NOT EXISTS source_ip text;
+-- ALTER TABLE public.quote_requests ADD COLUMN IF NOT EXISTS user_agent text;
+-- ALTER TABLE public.quote_request_files RENAME COLUMN file_name TO original_name;
+-- ALTER TABLE public.quote_request_files ADD COLUMN IF NOT EXISTS mime_type text;
+-- ALTER TABLE public.quote_request_files ADD COLUMN IF NOT EXISTS size_bytes bigint;
 
 -- =====================================================
 -- ROW LEVEL SECURITY POLICIES

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, CheckCircle, Upload, X } from 'lucide-react';
 import { Section } from '@/components';
 import { submitQuoteRequest } from '@/app/actions/quote';
-import { quoteRequestSchema } from '@/lib/validations';
+import { quoteRequestSchema, validateFile, FILE_CONSTRAINTS, normalizePhone } from '@/lib/validations';
 import type { SiteSettings } from '@/lib/types';
 
 interface ContactPageClientProps {
@@ -38,16 +38,45 @@ export default function ContactPageClient({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [requestId, setRequestId] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setFiles((prev) => [...prev, ...newFiles].slice(0, 5)); // Max 5 files
+      const currentFiles = [...files];
+
+      // Validate and add files
+      for (const file of newFiles) {
+        if (currentFiles.length >= FILE_CONSTRAINTS.maxFiles) {
+          setErrors((prev) => ({
+            ...prev,
+            files: `Maximum ${FILE_CONSTRAINTS.maxFiles} files allowed`,
+          }));
+          break;
+        }
+
+        const validation = validateFile(file);
+        if (!validation.valid) {
+          setErrors((prev) => ({
+            ...prev,
+            files: validation.error || 'Invalid file',
+          }));
+          continue;
+        }
+
+        currentFiles.push(file);
+      }
+
+      setFiles(currentFiles);
     }
   };
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
+    setErrors((prev) => {
+      const { files: _, ...rest } = prev;
+      return rest;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,9 +91,9 @@ export default function ContactPageClient({
     const data = {
       name: formData.get('name') as string,
       phone: formData.get('phone') as string,
-      email: (formData.get('email') as string) || undefined,
+      email: formData.get('email') as string,
       service_type: formData.get('service_type') as string,
-      location: (formData.get('location') as string) || undefined,
+      location: formData.get('location') as string,
       description: formData.get('description') as string,
     };
 
@@ -94,8 +123,13 @@ export default function ContactPageClient({
 
     if (submitResult.success) {
       setIsSubmitted(true);
+      setRequestId(submitResult.requestId || null);
     } else {
-      setSubmitError(submitResult.error || 'Failed to submit. Please try again.');
+      // Handle field-specific errors from server
+      if (submitResult.fieldErrors) {
+        setErrors(submitResult.fieldErrors);
+      }
+      setSubmitError(submitResult.error || 'Something went wrong. Please try again.');
     }
   };
 
@@ -114,10 +148,15 @@ export default function ContactPageClient({
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                 Thank You!
               </h1>
-              <p className="text-lg text-gray-300 max-w-md mx-auto">
+              <p className="text-lg text-gray-300 max-w-md mx-auto mb-4">
                 We&apos;ve received your quote request. Our team will review your project
                 and get back to you within 24-48 hours.
               </p>
+              {requestId && requestId !== 'blocked' && (
+                <p className="text-sm text-gray-400">
+                  Reference ID: <span className="font-mono">{requestId.slice(0, 8)}</span>
+                </p>
+              )}
             </motion.div>
           </div>
         </section>
@@ -253,6 +292,20 @@ export default function ContactPageClient({
               )}
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot field - hidden from users, visible to bots */}
+                <div className="absolute -left-[9999px]" aria-hidden="true">
+                  <label htmlFor="company_website">
+                    Leave this field empty
+                    <input
+                      type="text"
+                      id="company_website"
+                      name="company_website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </label>
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-6">
                   {/* Name */}
                   <div>
@@ -266,6 +319,7 @@ export default function ContactPageClient({
                       type="text"
                       id="name"
                       name="name"
+                      maxLength={80}
                       className={`w-full px-4 py-3 border ${
                         errors.name ? 'border-red-500' : 'border-gray-300'
                       } focus:outline-none focus:border-[#990303] transition-colors`}
@@ -288,10 +342,13 @@ export default function ContactPageClient({
                       type="tel"
                       id="phone"
                       name="phone"
+                      inputMode="numeric"
+                      autoComplete="tel"
+                      maxLength={20}
                       className={`w-full px-4 py-3 border ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       } focus:outline-none focus:border-[#990303] transition-colors`}
-                      placeholder="(555) 123-4567"
+                      placeholder="5551234567"
                     />
                     {errors.phone && (
                       <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
@@ -306,12 +363,14 @@ export default function ContactPageClient({
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Email <span className="text-gray-400">(optional)</span>
+                      Email <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="email"
                       id="email"
                       name="email"
+                      autoComplete="email"
+                      maxLength={120}
                       className={`w-full px-4 py-3 border ${
                         errors.email ? 'border-red-500' : 'border-gray-300'
                       } focus:outline-none focus:border-[#990303] transition-colors`}
@@ -358,15 +417,22 @@ export default function ContactPageClient({
                     htmlFor="location"
                     className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    Location/Zip Code <span className="text-gray-400">(optional)</span>
+                    Address / City <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="location"
                     name="location"
-                    className="w-full px-4 py-3 border border-gray-300 focus:outline-none focus:border-[#990303] transition-colors"
-                    placeholder="City, State or Zip Code"
+                    autoComplete="address-level2"
+                    maxLength={120}
+                    className={`w-full px-4 py-3 border ${
+                      errors.location ? 'border-red-500' : 'border-gray-300'
+                    } focus:outline-none focus:border-[#990303] transition-colors`}
+                    placeholder="123 Main Street, Chicago"
                   />
+                  {errors.location && (
+                    <p className="text-red-500 text-sm mt-1">{errors.location}</p>
+                  )}
                 </div>
 
                 {/* Description */}
@@ -381,6 +447,7 @@ export default function ContactPageClient({
                     id="description"
                     name="description"
                     rows={5}
+                    maxLength={2000}
                     className={`w-full px-4 py-3 border ${
                       errors.description ? 'border-red-500' : 'border-gray-300'
                     } focus:outline-none focus:border-[#990303] transition-colors resize-none`}
@@ -401,7 +468,7 @@ export default function ContactPageClient({
                       type="file"
                       id="file-upload"
                       multiple
-                      accept="image/*"
+                      accept="image/jpeg,image/png,image/webp"
                       onChange={handleFileChange}
                       className="hidden"
                     />
@@ -414,10 +481,13 @@ export default function ContactPageClient({
                         Click to upload or drag and drop
                       </span>
                       <span className="text-gray-400 text-sm mt-1">
-                        PNG, JPG up to 10MB each
+                        JPEG, PNG, WebP up to 5MB each
                       </span>
                     </label>
                   </div>
+                  {errors.files && (
+                    <p className="text-red-500 text-sm mt-1">{errors.files}</p>
+                  )}
 
                   {/* File List */}
                   {files.length > 0 && (
@@ -469,4 +539,3 @@ export default function ContactPageClient({
     </>
   );
 }
-
