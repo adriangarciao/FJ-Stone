@@ -1,6 +1,9 @@
 import { getAdminSiteSettings } from '@/lib/supabase/admin-queries';
 import SettingsFormClient from './SettingsFormClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AdminSettingsPage() {
   const settings = await getAdminSiteSettings();
 

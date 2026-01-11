@@ -39,8 +39,11 @@ export interface QuoteRequest {
   service_type: string;
   location: string | null;
   description: string;
+  preferred_contact?: 'phone' | 'email' | 'either';
   status: 'NEW' | 'CONTACTED' | 'SCHEDULED' | 'WON' | 'LOST';
   notes: string | null;
+  source_ip?: string;
+  user_agent?: string;
   created_at: string;
   files?: QuoteRequestFile[];
 }
@@ -49,7 +52,10 @@ export interface QuoteRequestFile {
   id: string;
   quote_request_id: string;
   storage_path: string;
-  file_name: string;
+  original_name: string;
+  file_name?: string; // deprecated, use original_name
+  mime_type?: string;
+  size_bytes?: number;
   created_at: string;
 }
 

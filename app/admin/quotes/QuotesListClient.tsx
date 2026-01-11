@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Phone, Mail, MapPin, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { Phone, Mail, MapPin, Trash2, ExternalLink } from 'lucide-react';
 import { updateQuoteStatus, deleteQuote } from '@/app/actions/admin';
 import type { QuoteRequest } from '@/lib/types';
 
@@ -79,14 +80,17 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
         {filteredQuotes.map((quote) => (
           <div
             key={quote.id}
-            className="bg-white border border-gray-200 p-6"
+            className="bg-white border border-gray-200 p-6 hover:border-gray-300 transition-colors"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <Link
+                    href={`/admin/quotes/${quote.id}`}
+                    className="text-lg font-semibold text-gray-900 hover:text-[#990303] transition-colors"
+                  >
                     {quote.name}
-                  </h3>
+                  </Link>
                   <span
                     className={`px-2 py-1 text-xs font-semibold ${
                       statusColors[quote.status]
@@ -144,7 +148,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
               </div>
             </div>
 
-            <p className="text-gray-600 mb-4">{quote.description}</p>
+            <p className="text-gray-600 mb-4 line-clamp-2">{quote.description}</p>
 
             {quote.files && quote.files.length > 0 && (
               <div className="mb-4 p-3 bg-gray-50">
@@ -157,7 +161,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                       key={file.id}
                       className="text-xs bg-gray-200 px-2 py-1"
                     >
-                      {file.file_name}
+                      {file.original_name || file.file_name}
                     </span>
                   ))}
                 </div>
@@ -165,15 +169,16 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
             )}
 
             <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-              <div className="flex items-center gap-3">
-                <label className="text-sm text-gray-500">Status:</label>
-                <select
-                  value={quote.status}
-                  onChange={(e) => handleStatusChange(quote.id, e.target.value)}
-                  disabled={updatingId === quote.id}
-                  className="px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#990303] disabled:opacity-50"
-                >
-                  {statusOptions.map((status) => (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <label className="text-sm text-gray-500">Status:</label>
+                  <select
+                    value={quote.status}
+                    onChange={(e) => handleStatusChange(quote.id, e.target.value)}
+                    disabled={updatingId === quote.id}
+                    className="px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#990303] disabled:opacity-50"
+                  >
+                    {statusOptions.map((status) => (
                     <option key={status} value={status}>
                       {status}
                     </option>
@@ -182,6 +187,14 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                 {updatingId === quote.id && (
                   <span className="text-xs text-gray-400">Updating...</span>
                 )}
+                </div>
+                <Link
+                  href={`/admin/quotes/${quote.id}`}
+                  className="text-sm text-[#990303] hover:text-[#71706e] font-medium flex items-center gap-1 transition-colors"
+                >
+                  View Details
+                  <ExternalLink size={14} />
+                </Link>
               </div>
             </div>
           </div>

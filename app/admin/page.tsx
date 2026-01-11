@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { FolderOpen, Star, MessageSquare, Settings } from 'lucide-react';
 import { getAllProjects, getAllReviews, getAllQuoteRequests } from '@/lib/supabase/admin-queries';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const adminLinks = [
   {
     href: '/admin/projects',
