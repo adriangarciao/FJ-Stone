@@ -11,7 +11,7 @@ import {
   ProjectCard,
   ReviewCard,
 } from '@/components';
-import type { SiteSettings, Project, Review, Service } from '@/lib/types';
+import type { SiteSettings, Project, Review, Service, ContentBlock } from '@/lib/types';
 
 const whyChooseUs = [
   'Over 15 years of industry experience',
@@ -27,6 +27,7 @@ interface HomePageClientProps {
   featuredProjects: Project[];
   featuredReviews: Review[];
   featuredServices: Service[];
+  contentBlocks?: Record<string, ContentBlock>;
 }
 
 export default function HomePageClient({
@@ -34,6 +35,7 @@ export default function HomePageClient({
   featuredProjects,
   featuredReviews,
   featuredServices,
+  contentBlocks = {},
 }: HomePageClientProps) {
   return (
     <>
@@ -43,6 +45,7 @@ export default function HomePageClient({
         subheadline={siteSettings.hero_subheadline}
         showCTAs={true}
         logoImage="/images/fj_logo.png"
+        contentBlocks={contentBlocks}
       />
 
       {/* Services Section */}

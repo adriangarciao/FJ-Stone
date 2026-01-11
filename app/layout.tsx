@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar, Footer } from '@/components';
+import { EditModeWrapper } from '@/components/admin';
 import { getSiteSettings } from '@/lib/supabase/queries';
 
 const inter = Inter({
@@ -35,9 +36,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer siteSettings={siteSettings} />
+        <EditModeWrapper>
+          <Navbar />
+          <main>{children}</main>
+          <Footer siteSettings={siteSettings} />
+        </EditModeWrapper>
       </body>
     </html>
   );

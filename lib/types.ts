@@ -70,6 +70,28 @@ export interface SiteSettings {
   updated_at: string;
 }
 
+// Content Blocks for visual editing
+export type ContentBlockType = 'text' | 'richtext' | 'image' | 'gallery' | 'list';
+
+export interface ContentBlockValue {
+  text?: string;
+  html?: string;
+  url?: string;
+  alt?: string;
+  items?: Array<{ url: string; caption?: string; alt?: string }>;
+  listItems?: string[];
+}
+
+export interface ContentBlock {
+  id: string;
+  key: string;
+  page: string;
+  block_type: ContentBlockType;
+  value: ContentBlockValue;
+  updated_at: string;
+  created_at: string;
+}
+
 export interface Service {
   id: string;
   title: string;
