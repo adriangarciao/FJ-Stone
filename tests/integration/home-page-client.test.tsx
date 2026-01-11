@@ -14,7 +14,8 @@ describe('HomePageClient', () => {
       />
     );
 
-    expect(screen.getByText(siteSettings.hero_headline)).toBeInTheDocument();
+    // Hero headline appears multiple times (h1 and h2 in Hero component)
+    expect(screen.getAllByText(siteSettings.hero_headline).length).toBeGreaterThan(0);
     expect(screen.getByText('Featured Projects')).toBeInTheDocument();
     expect(screen.getByText('What Our Clients Say')).toBeInTheDocument();
     expect(screen.getByText(services[0].title)).toBeInTheDocument();

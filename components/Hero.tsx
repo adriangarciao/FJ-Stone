@@ -67,10 +67,26 @@ export default function Hero({
 
             {showCTAs && (
               <>
+                <motion.h2
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.55 }}
+                  className="text-2xl sm:text-3xl font-bold text-white mb-4"
+                >
+                  Crafting Outdoor Spaces That Last
+                </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
+                  className="text-base sm:text-lg text-gray-300 mb-6"
+                >
+                  Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time.
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.65 }}
                   className="text-xl sm:text-2xl font-semibold text-white mb-8 italic"
                 >
                   &quot;Quality Work, Built to Last&quot;
