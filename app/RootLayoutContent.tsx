@@ -25,7 +25,7 @@ export default function RootLayoutContent({
     <>
       <Navbar />
       <main>{children}</main>
-      <Footer siteSettings={siteSettings} />
+      <Footer siteSettings={siteSettings ?? undefined} />
     </>
   );
 }

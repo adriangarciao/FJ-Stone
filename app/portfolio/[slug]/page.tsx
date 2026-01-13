@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProjectBySlug, getPublishedProjects } from '@/lib/supabase/queries';
+import { getProjectImageUrl } from '@/lib/supabase/storage';
 import ProjectDetailClient from './ProjectDetailClient';
 
 export const revalidate = 60;
@@ -19,7 +20,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const firstImage = project.images?.[0]?.url;
+  const firstImage = project.images?.[0]?.storage_path
+    ? getProjectImageUrl(project.images[0].storage_path)
+    : undefined;
 
   return {
     title: project.title,
