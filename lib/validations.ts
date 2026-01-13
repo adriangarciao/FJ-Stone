@@ -85,7 +85,7 @@ export const quoteRequestSchema = z.object({
 
 export type QuoteRequestFormData = z.infer<typeof quoteRequestSchema>;
 
-// Validate a single file
+// Validate a single file (client-side - MIME type only)
 export function validateFile(file: File): { valid: boolean; error?: string } {
   if (file.size > FILE_CONSTRAINTS.maxSizeBytes) {
     return { valid: false, error: `File "${file.name}" exceeds 5MB limit` };
@@ -93,6 +93,54 @@ export function validateFile(file: File): { valid: boolean; error?: string } {
 
   if (!FILE_CONSTRAINTS.allowedTypes.includes(file.type as typeof ALLOWED_MIME_TYPES[number])) {
     return { valid: false, error: `File "${file.name}" has invalid type. Allowed: JPEG, PNG, WebP` };
+  }
+
+  return { valid: true };
+}
+
+/**
+ * Magic byte signatures for image file validation (server-side)
+ * This prevents MIME type spoofing attacks where attackers upload malicious files
+ * with fake MIME types (e.g., uploading a PHP file as image/jpeg)
+ */
+const MAGIC_BYTES = {
+  jpeg: [0xff, 0xd8, 0xff],           // JPEG/JPG
+  png: [0x89, 0x50, 0x4e, 0x47],      // PNG
+  webp: [0x52, 0x49, 0x46, 0x46],     // RIFF (WebP starts with RIFF)
+} as const;
+
+/**
+ * Validate file magic bytes to ensure the file content matches its claimed type.
+ * This is a server-side security measure to prevent MIME type spoofing.
+ * @param buffer - ArrayBuffer of the file content
+ * @param claimedType - The MIME type claimed by the file
+ */
+export async function validateFileMagicBytes(
+  buffer: ArrayBuffer,
+  claimedType: string
+): Promise<{ valid: boolean; error?: string }> {
+  const bytes = new Uint8Array(buffer.slice(0, 12));
+
+  const isJpeg = MAGIC_BYTES.jpeg.every((b, i) => bytes[i] === b);
+  const isPng = MAGIC_BYTES.png.every((b, i) => bytes[i] === b);
+  // WebP: starts with RIFF, then 4 bytes of file size, then WEBP
+  const isWebp = MAGIC_BYTES.webp.every((b, i) => bytes[i] === b) &&
+    bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50;
+
+  // Check if magic bytes match the claimed MIME type
+  if (claimedType === 'image/jpeg' && !isJpeg) {
+    return { valid: false, error: 'File content does not match JPEG format' };
+  }
+  if (claimedType === 'image/png' && !isPng) {
+    return { valid: false, error: 'File content does not match PNG format' };
+  }
+  if (claimedType === 'image/webp' && !isWebp) {
+    return { valid: false, error: 'File content does not match WebP format' };
+  }
+
+  // Ensure the file is actually one of the allowed image types
+  if (!isJpeg && !isPng && !isWebp) {
+    return { valid: false, error: 'File is not a valid image (JPEG, PNG, or WebP)' };
   }
 
   return { valid: true };

@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers';
 import { createServiceClient } from '@/lib/supabase/server';
-import { quoteRequestSchema, validateFiles, FILE_CONSTRAINTS } from '@/lib/validations';
+import { quoteRequestSchema, validateFiles, validateFileMagicBytes, FILE_CONSTRAINTS } from '@/lib/validations';
 import { checkRateLimit, getClientIP } from '@/lib/rate-limit';
 import { sendQuoteNotificationEmail, type PhotoLink } from '@/lib/email';
 
@@ -160,15 +160,23 @@ export async function submitQuoteRequest(
           continue;
         }
 
+        // SECURITY: Validate magic bytes to prevent MIME type spoofing
+        const arrayBuffer = await file.arrayBuffer();
+        const magicValidation = await validateFileMagicBytes(arrayBuffer, file.type);
+        if (!magicValidation.valid) {
+          console.warn(`Magic byte validation failed for ${file.name}: ${magicValidation.error}`);
+          continue;
+        }
+
         // Generate secure filename
         const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
         const safeExt = ['jpg', 'jpeg', 'png', 'webp'].includes(fileExt) ? fileExt : 'jpg';
         const storagePath = `${quote.id}/${Date.now()}-${Math.random().toString(36).substring(2, 10)}.${safeExt}`;
 
-        // Upload to quote-uploads bucket (using the same service client)
+        // Upload to quote-uploads bucket using the already-read arrayBuffer
         const { error: uploadError } = await supabase.storage
           .from('quote-uploads')
-          .upload(storagePath, file, {
+          .upload(storagePath, arrayBuffer, {
             cacheControl: '3600',
             upsert: false,
             contentType: file.type,
