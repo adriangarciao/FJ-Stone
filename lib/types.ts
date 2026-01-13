@@ -16,6 +16,7 @@ export interface ProjectImage {
   project_id: string;
   storage_path: string;
   caption: string | null;
+  alt: string | null;
   sort_order: number;
   created_at: string;
 }

@@ -3,7 +3,6 @@ import { createClient, createServiceClient } from '@/lib/supabase/server';
 import {
   validatePortfolioFiles,
   generateSafeFileName,
-  PORTFOLIO_FILE_CONSTRAINTS,
 } from '@/lib/validations/portfolio';
 import { revalidatePath } from 'next/cache';
 

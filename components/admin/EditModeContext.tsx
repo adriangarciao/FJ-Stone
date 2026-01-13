@@ -5,7 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
-  useEffect,
+  useMemo,
   type ReactNode,
 } from 'react';
 import type { ContentBlock, Project } from '@/lib/types';
@@ -56,14 +56,17 @@ export function EditModeProvider({
   children,
   initialIsAdmin = false,
 }: EditModeProviderProps) {
-  // Initialize edit mode from sessionStorage if admin
-  const [isEditMode, setIsEditMode] = useState(() => {
-    if (typeof window !== 'undefined' && initialIsAdmin) {
+  // Store raw edit mode preference in state
+  const [editModePreference, setEditModePreference] = useState(() => {
+    if (typeof window !== 'undefined') {
       return sessionStorage.getItem('editMode') === 'true';
     }
     return false;
   });
-  const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
+  // Use prop directly as source of truth - no separate state needed
+  const isAdmin = initialIsAdmin;
+  // Provide setIsAdmin as no-op for interface compatibility (prop controls this)
+  const setIsAdmin = useCallback(() => {}, []);
   const [activeBlock, setActiveBlock] = useState<ContentBlock | null>(null);
   const [pendingUpdates, setPendingUpdates] = useState<Record<string, ContentBlock>>({});
 
@@ -72,17 +75,14 @@ export function EditModeProvider({
   const [isCreatingProject, setIsCreatingProject] = useState(false);
   const [projectRefreshKey, setProjectRefreshKey] = useState(0);
 
-  // Sync isAdmin state when initialIsAdmin prop changes (e.g., on logout)
-  useEffect(() => {
-    setIsAdmin(initialIsAdmin);
-    // If no longer admin, also turn off edit mode
-    if (!initialIsAdmin) {
-      setIsEditMode(false);
-    }
-  }, [initialIsAdmin]);
+  // Compute effective edit mode: only true if admin AND user has toggled it on
+  const isEditMode = useMemo(
+    () => isAdmin && editModePreference,
+    [isAdmin, editModePreference]
+  );
 
   const toggleEditMode = useCallback(() => {
-    setIsEditMode((prev) => {
+    setEditModePreference((prev) => {
       const next = !prev;
       sessionStorage.setItem('editMode', String(next));
       return next;
@@ -134,7 +134,7 @@ export function EditModeProvider({
   return (
     <EditModeContext.Provider
       value={{
-        isEditMode: isAdmin && isEditMode,
+        isEditMode,
         toggleEditMode,
         isAdmin,
         setIsAdmin,
