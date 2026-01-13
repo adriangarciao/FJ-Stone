@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Trash2, ExternalLink } from 'lucide-react';
 import { updateQuoteStatus, deleteQuote } from '@/app/actions/admin';
+import ConfirmDialog from '@/components/ConfirmDialog';
 import type { QuoteRequest } from '@/lib/types';
 
 interface QuotesListClientProps {
@@ -24,6 +25,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
   const [filter, setFilter] = useState<string>('All');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [quoteToDelete, setQuoteToDelete] = useState<string | null>(null);
 
   const filteredQuotes =
     filter === 'All'
@@ -40,16 +42,25 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
     }
   };
 
-  const handleDelete = async (quoteId: string) => {
-    if (!confirm('Are you sure you want to delete this quote request?')) return;
+  const handleDeleteClick = (quoteId: string) => {
+    setQuoteToDelete(quoteId);
+  };
 
-    setDeletingId(quoteId);
-    const result = await deleteQuote(quoteId);
+  const handleDeleteConfirm = async () => {
+    if (!quoteToDelete) return;
+
+    setDeletingId(quoteToDelete);
+    const result = await deleteQuote(quoteToDelete);
     setDeletingId(null);
+    setQuoteToDelete(null);
 
     if (!result.success) {
       alert(result.error || 'Failed to delete quote');
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setQuoteToDelete(null);
   };
 
   return (
@@ -138,7 +149,7 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
                   </p>
                 </div>
                 <button
-                  onClick={() => handleDelete(quote.id)}
+                  onClick={() => handleDeleteClick(quote.id)}
                   disabled={deletingId === quote.id}
                   className="p-2 text-gray-400 hover:text-red-500 transition-colors disabled:opacity-50"
                   title="Delete"
@@ -208,6 +219,18 @@ export default function QuotesListClient({ quotes }: QuotesListClientProps) {
           </div>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={quoteToDelete !== null}
+        title="Delete Quote Request"
+        message="Are you sure you want to delete this quote request?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={deletingId !== null}
+      />
     </>
   );
 }
