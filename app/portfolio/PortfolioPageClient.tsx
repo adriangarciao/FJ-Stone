@@ -1,8 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Plus, Pencil, Eye, EyeOff } from 'lucide-react';
 import { ProjectCard, Section, SectionHeader } from '@/components';
+import { useEditModeOptional } from '@/components/admin';
 import type { Project } from '@/lib/types';
 
 interface PortfolioPageClientProps {
@@ -11,15 +14,69 @@ interface PortfolioPageClientProps {
 }
 
 export default function PortfolioPageClient({
-  projects,
+  projects: initialProjects,
   filters,
 }: PortfolioPageClientProps) {
-  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const router = useRouter();
+  const editMode = useEditModeOptional();
+  const isEditMode = editMode?.isEditMode ?? false;
+  const openProjectEditor = editMode?.openProjectEditor;
+  const projectRefreshKey = editMode?.projectRefreshKey ?? 0;
 
-  const filteredProjects =
-    activeFilter === 'All'
-      ? projects
-      : projects.filter((p) => p.service_type === activeFilter);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [showUnpublished, setShowUnpublished] = useState(false);
+
+  // Refresh projects when edit mode triggers a refresh
+  useEffect(() => {
+    if (projectRefreshKey > 0) {
+      router.refresh();
+    }
+  }, [projectRefreshKey, router]);
+
+  // Filter projects based on service type and publish status
+  const filteredProjects = projects.filter((p) => {
+    const matchesFilter = activeFilter === 'All' || p.service_type === activeFilter;
+    const isVisible = p.is_published || (isEditMode && showUnpublished);
+    return matchesFilter && isVisible;
+  });
+
+  const handleEditProject = useCallback(
+    (project: Project) => {
+      openProjectEditor?.(project);
+    },
+    [openProjectEditor]
+  );
+
+  const handleNewProject = useCallback(() => {
+    openProjectEditor?.(null);
+  }, [openProjectEditor]);
+
+  const handleQuickTogglePublish = async (project: Project, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      const response = await fetch(`/api/admin/projects/${project.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          is_published: !project.is_published,
+        }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setProjects((prev) =>
+          prev.map((p) =>
+            p.id === project.id ? { ...p, is_published: !p.is_published } : p
+          )
+        );
+      }
+    } catch (err) {
+      console.error('Failed to toggle publish status:', err);
+    }
+  };
 
   return (
     <>
@@ -49,6 +106,34 @@ export default function PortfolioPageClient({
 
       {/* Portfolio Grid */}
       <Section background="white">
+        {/* Admin Controls */}
+        {isEditMode && (
+          <div className="mb-8 p-4 bg-gray-50 border border-gray-200 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handleNewProject}
+                className="flex items-center gap-2 bg-[#990303] hover:bg-[#71706e] text-white px-4 py-2 font-medium transition-colors"
+              >
+                <Plus size={18} />
+                New Project
+              </button>
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-600">
+                <input
+                  type="checkbox"
+                  checked={showUnpublished}
+                  onChange={(e) => setShowUnpublished(e.target.checked)}
+                  className="w-4 h-4"
+                />
+                Show unpublished projects
+              </label>
+            </div>
+            <p className="text-sm text-gray-500">
+              {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''}
+              {showUnpublished && ' (including drafts)'}
+            </p>
+          </div>
+        )}
+
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {filters.map((filter) => (
@@ -79,7 +164,54 @@ export default function PortfolioPageClient({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
+              className="relative group"
             >
+              {/* Admin Overlay */}
+              {isEditMode && (
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                  {/* Draft Badge */}
+                  {!project.is_published && (
+                    <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1">
+                      DRAFT
+                    </div>
+                  )}
+                  {/* Edit Controls */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto">
+                    <div className="flex items-center justify-between">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleEditProject(project);
+                        }}
+                        className="flex items-center gap-1.5 bg-white text-gray-900 px-3 py-1.5 text-sm font-medium hover:bg-gray-100 transition-colors"
+                      >
+                        <Pencil size={14} />
+                        Edit
+                      </button>
+                      <button
+                        onClick={(e) => handleQuickTogglePublish(project, e)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
+                          project.is_published
+                            ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                            : 'bg-green-600 hover:bg-green-700 text-white'
+                        }`}
+                      >
+                        {project.is_published ? (
+                          <>
+                            <EyeOff size={14} />
+                            Unpublish
+                          </>
+                        ) : (
+                          <>
+                            <Eye size={14} />
+                            Publish
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               <ProjectCard project={project} index={index} />
             </motion.div>
           ))}
@@ -91,6 +223,15 @@ export default function PortfolioPageClient({
             <p className="text-gray-500 text-lg">
               No projects found for this category.
             </p>
+            {isEditMode && (
+              <button
+                onClick={handleNewProject}
+                className="mt-4 inline-flex items-center gap-2 bg-[#990303] hover:bg-[#71706e] text-white px-6 py-3 font-medium transition-colors"
+              >
+                <Plus size={18} />
+                Create Your First Project
+              </button>
+            )}
           </div>
         )}
       </Section>
