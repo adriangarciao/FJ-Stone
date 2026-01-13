@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
 import {
@@ -104,12 +105,14 @@ export default function HomePageClient({
             viewport={{ once: true }}
             className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center p-8"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/fj_logo.png"
-              alt="F&J's Stone Services Logo"
-              className="max-w-full max-h-full object-contain"
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src="/images/fj_logo.png"
+                alt="F&J's Stone Services Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           </motion.div>
         </div>
       </Section>

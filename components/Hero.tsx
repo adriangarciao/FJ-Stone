@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { EditableText } from '@/components/admin';
 import type { ContentBlock } from '@/lib/types';
@@ -44,12 +45,13 @@ export default function Hero({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center lg:justify-start"
           >
-            <div className="relative w-[550px] h-[550px] sm:w-[550px] sm:h-[550px] lg:w-[950px] lg:h-[950px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px]">
+              <Image
                 src={logoImage}
                 alt="F&J's Stone Services Logo"
-                className="w-full h-full object-contain"
+                fill
+                className="object-contain"
+                priority
               />
             </div>
           </motion.div>
@@ -84,26 +86,10 @@ export default function Hero({
 
             {showCTAs && (
               <>
-                <motion.h2
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.55 }}
-                  className="text-2xl sm:text-3xl font-bold text-white mb-4"
-                >
-                  Crafting Outdoor Spaces That Last
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="text-base sm:text-lg text-gray-300 mb-6"
-                >
-                  Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time.
-                </motion.p>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.65 }}
+                  transition={{ duration: 0.6, delay: 0.55 }}
                 >
                   <EditableText
                     block={taglineBlock}
