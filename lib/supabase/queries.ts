@@ -112,20 +112,26 @@ export async function getFeaturedProjects(): Promise<Project[]> {
   }
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
+export async function getProjectBySlug(slug: string, includeUnpublished = false): Promise<Project | null> {
   try {
     const supabase = await createClient();
-    const { data: project, error } = await supabase
-      .from('projects')
-      .select('*')
-      .eq('slug', slug)
-      .eq('is_published', true)
-      .single();
+
+    // Build query - if includeUnpublished, check admin status first
+    let query = supabase.from('projects').select('*').eq('slug', slug);
+
+    if (!includeUnpublished) {
+      query = query.eq('is_published', true);
+    }
+
+    const { data: project, error } = await query.single();
 
     if (error || !project) {
-      // Fallback to local portfolio data
-      const localProject = portfolioProjects.find(p => p.slug === slug);
-      return localProject || null;
+      // Fallback to local portfolio data (only for published)
+      if (!includeUnpublished) {
+        const localProject = portfolioProjects.find(p => p.slug === slug);
+        return localProject || null;
+      }
+      return null;
     }
 
     // Fetch images for the project
@@ -143,6 +149,41 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
     // Fallback to local portfolio data
     const localProject = portfolioProjects.find(p => p.slug === slug);
     return localProject || null;
+  }
+}
+
+// Get all projects (including unpublished) - admin only
+export async function getAllProjects(): Promise<Project[]> {
+  try {
+    const supabase = await createClient();
+    const { data: projects, error } = await supabase
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error || !projects) {
+      return [];
+    }
+
+    // Fetch images for each project
+    const projectsWithImages = await Promise.all(
+      projects.map(async (project) => {
+        const { data: images } = await supabase
+          .from('project_images')
+          .select('*')
+          .eq('project_id', project.id)
+          .order('sort_order', { ascending: true });
+
+        return {
+          ...project,
+          images: images || [],
+        } as Project;
+      })
+    );
+
+    return projectsWithImages;
+  } catch {
+    return [];
   }
 }
 

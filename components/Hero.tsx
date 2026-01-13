@@ -1,7 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { EditableText } from '@/components/admin';
+import type { ContentBlock } from '@/lib/types';
 
 interface HeroProps {
   headline: string;
@@ -9,6 +12,7 @@ interface HeroProps {
   showCTAs?: boolean;
   logoImage?: string;
   minHeight?: string;
+  contentBlocks?: Record<string, ContentBlock>;
 }
 
 export default function Hero({
@@ -17,7 +21,13 @@ export default function Hero({
   showCTAs = true,
   logoImage = '/images/fj_logo.png',
   minHeight = 'min-h-screen',
+  contentBlocks = {},
 }: HeroProps) {
+  // Get content blocks or use fallbacks
+  const headlineBlock = contentBlocks['home.hero.headline'] || null;
+  const subheadlineBlock = contentBlocks['home.hero.subheadline'] || null;
+  const taglineBlock = contentBlocks['home.hero.tagline'] || null;
+
   return (
     <section
       className={`relative ${minHeight} flex items-center overflow-hidden`}
@@ -35,62 +45,59 @@ export default function Hero({
             transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center lg:justify-start"
           >
-            <div className="relative w-[550px] h-[550px] sm:w-[550px] sm:h-[550px] lg:w-[950px] lg:h-[950px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px]">
+              <Image
                 src={logoImage}
                 alt="F&J's Stone Services Logo"
-                className="w-full h-full object-contain"
+                fill
+                className="object-contain"
+                priority
               />
             </div>
           </motion.div>
 
           {/* Right Side - Text and CTAs */}
           <div className="text-center lg:text-left">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
             >
-              {headline}
-            </motion.h1>
+              <EditableText
+                block={headlineBlock}
+                fallback={headline}
+                as="h1"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
+              />
+            </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg sm:text-xl text-gray-300 mb-6"
             >
-              {subheadline}
-            </motion.p>
+              <EditableText
+                block={subheadlineBlock}
+                fallback={subheadline}
+                as="p"
+                className="text-lg sm:text-xl text-gray-300 mb-6"
+              />
+            </motion.div>
 
             {showCTAs && (
               <>
-                <motion.h2
+                <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.55 }}
-                  className="text-2xl sm:text-3xl font-bold text-white mb-4"
                 >
-                  Crafting Outdoor Spaces That Last
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="text-base sm:text-lg text-gray-300 mb-6"
-                >
-                  Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time.
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.65 }}
-                  className="text-xl sm:text-2xl font-semibold text-white mb-8 italic"
-                >
-                  &quot;Quality Work, Built to Last&quot;
-                </motion.p>
+                  <EditableText
+                    block={taglineBlock}
+                    fallback="Quality Work, Built to Last"
+                    as="p"
+                    className="text-xl sm:text-2xl font-semibold text-white mb-8 italic"
+                  />
+                </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}

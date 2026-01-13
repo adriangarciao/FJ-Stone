@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
 import {
@@ -11,7 +12,7 @@ import {
   ProjectCard,
   ReviewCard,
 } from '@/components';
-import type { SiteSettings, Project, Review, Service } from '@/lib/types';
+import type { SiteSettings, Project, Review, Service, ContentBlock } from '@/lib/types';
 
 const whyChooseUs = [
   'Over 15 years of industry experience',
@@ -27,6 +28,7 @@ interface HomePageClientProps {
   featuredProjects: Project[];
   featuredReviews: Review[];
   featuredServices: Service[];
+  contentBlocks?: Record<string, ContentBlock>;
 }
 
 export default function HomePageClient({
@@ -34,6 +36,7 @@ export default function HomePageClient({
   featuredProjects,
   featuredReviews,
   featuredServices,
+  contentBlocks = {},
 }: HomePageClientProps) {
   return (
     <>
@@ -43,6 +46,7 @@ export default function HomePageClient({
         subheadline={siteSettings.hero_subheadline}
         showCTAs={true}
         logoImage="/images/fj_logo.png"
+        contentBlocks={contentBlocks}
       />
 
       {/* Services Section */}
@@ -101,12 +105,14 @@ export default function HomePageClient({
             viewport={{ once: true }}
             className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center p-8"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/fj_logo.png"
-              alt="F&J's Stone Services Logo"
-              className="max-w-full max-h-full object-contain"
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src="/images/fj_logo.png"
+                alt="F&J's Stone Services Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
           </motion.div>
         </div>
       </Section>

@@ -113,18 +113,14 @@ CREATE TABLE IF NOT EXISTS public.quote_request_files (
 -- =====================================================
 
 -- Enable RLS on all tables
-ALTER TABLE public.admin_allowlist ENABLE ROW LEVEL SECURITY;
+-- NOTE: admin_allowlist does NOT have RLS enabled to avoid infinite recursion
+-- when is_admin() queries it. The emails in this table are not sensitive.
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.project_images ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.quote_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.quote_request_files ENABLE ROW LEVEL SECURITY;
-
--- admin_allowlist: only admin can read
-CREATE POLICY "Admin can read allowlist" ON public.admin_allowlist
-  FOR SELECT TO authenticated
-  USING (public.is_admin());
 
 -- site_settings: public can read, admin can update
 CREATE POLICY "Public can read site settings" ON public.site_settings
@@ -279,6 +275,63 @@ WITH CHECK (bucket_id = 'quote-uploads');
 CREATE POLICY "Admin can delete quote uploads"
 ON storage.objects FOR DELETE TO authenticated
 USING (bucket_id = 'quote-uploads' AND public.is_admin());
+
+-- =====================================================
+-- CONTENT BLOCKS TABLE (for visual editing)
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS public.content_blocks (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  key text UNIQUE NOT NULL,
+  page text NOT NULL,
+  block_type text NOT NULL CHECK (block_type IN ('text', 'richtext', 'image', 'gallery', 'list')),
+  value jsonb NOT NULL DEFAULT '{}',
+  updated_at timestamptz DEFAULT now(),
+  created_at timestamptz DEFAULT now()
+);
+
+-- Enable RLS
+ALTER TABLE public.content_blocks ENABLE ROW LEVEL SECURITY;
+
+-- Public can read content blocks (for rendering)
+CREATE POLICY "Public can read content blocks" ON public.content_blocks
+  FOR SELECT TO anon, authenticated
+  USING (true);
+
+-- Admin can insert content blocks
+CREATE POLICY "Admin can insert content blocks" ON public.content_blocks
+  FOR INSERT TO authenticated
+  WITH CHECK (public.is_admin());
+
+-- Admin can update content blocks
+CREATE POLICY "Admin can update content blocks" ON public.content_blocks
+  FOR UPDATE TO authenticated
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
+
+-- Admin can delete content blocks
+CREATE POLICY "Admin can delete content blocks" ON public.content_blocks
+  FOR DELETE TO authenticated
+  USING (public.is_admin());
+
+-- Index for fast lookups
+CREATE INDEX IF NOT EXISTS idx_content_blocks_key ON public.content_blocks(key);
+CREATE INDEX IF NOT EXISTS idx_content_blocks_page ON public.content_blocks(page);
+
+-- =====================================================
+-- SEED CONTENT BLOCKS
+-- =====================================================
+
+INSERT INTO public.content_blocks (key, page, block_type, value) VALUES
+  ('home.hero.headline', 'home', 'text', '{"text": "Crafting Outdoor Spaces That Last"}'),
+  ('home.hero.subheadline', 'home', 'text', '{"text": "Expert hardscaping, patios, and stonework for residential and commercial properties. Quality craftsmanship built to withstand the test of time."}'),
+  ('home.hero.cta_primary', 'home', 'text', '{"text": "Get a Free Quote"}'),
+  ('home.hero.cta_secondary', 'home', 'text', '{"text": "View Our Work"}'),
+  ('home.hero.tagline', 'home', 'text', '{"text": "Quality Work, Built to Last"}'),
+  ('footer.phone', 'global', 'text', '{"text": "(847) 847-9376"}'),
+  ('footer.email', 'global', 'text', '{"text": "fjstoneservices@gmail.com"}'),
+  ('footer.tagline', 'global', 'text', '{"text": "Quality craftsmanship for outdoor spaces that stand the test of time."}')
+ON CONFLICT (key) DO NOTHING;
 
 -- =====================================================
 -- SEED DATA (Optional - run after tables created)

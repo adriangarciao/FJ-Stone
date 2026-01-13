@@ -1,6 +1,9 @@
 import { getAllQuoteRequests } from '@/lib/supabase/admin-queries';
 import QuotesListClient from './QuotesListClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AdminQuotesPage() {
   const quotes = await getAllQuoteRequests();
 

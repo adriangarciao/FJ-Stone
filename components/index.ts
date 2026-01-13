@@ -6,3 +6,5 @@ export { default as ServiceCard } from './ServiceCard';
 export { default as ProjectCard } from './ProjectCard';
 export { default as ReviewCard } from './ReviewCard';
 export { default as ImageLightbox } from './ImageLightbox';
+export { default as ConfirmDialog } from './ConfirmDialog';
+export { Skeleton, ProjectCardSkeleton, PortfolioGridSkeleton, FilterButtonsSkeleton } from './Skeleton';

@@ -1,5 +1,8 @@
-import { createClient } from './server';
-import type { Project, Review, QuoteRequest, SiteSettings } from '../types';
+import { createClient, createServiceClient } from './server';
+import type { Project, Review, QuoteRequest, SiteSettings, QuoteRequestFile } from '../types';
+
+// Signed URL expiration: 1 hour in seconds
+const SIGNED_URL_EXPIRY_SECONDS = 3600;
 
 export async function getAllProjects(): Promise<Project[]> {
   try {
@@ -181,5 +184,45 @@ export async function getAdminSiteSettings(): Promise<SiteSettings | null> {
     return data as SiteSettings;
   } catch {
     return null;
+  }
+}
+
+/**
+ * Generate signed URLs for quote request files.
+ * Uses service client to access the private quote-uploads bucket.
+ * Returns a map of file ID to signed URL.
+ */
+export async function getQuoteFileSignedUrls(
+  files: QuoteRequestFile[]
+): Promise<Record<string, string | null>> {
+  if (!files || files.length === 0) {
+    return {};
+  }
+
+  try {
+    const supabase = await createServiceClient();
+    const urlMap: Record<string, string | null> = {};
+
+    for (const file of files) {
+      try {
+        const { data, error } = await supabase.storage
+          .from('quote-uploads')
+          .createSignedUrl(file.storage_path, SIGNED_URL_EXPIRY_SECONDS);
+
+        if (error || !data?.signedUrl) {
+          console.error(`Error generating signed URL for ${file.id}:`, error);
+          urlMap[file.id] = null;
+        } else {
+          urlMap[file.id] = data.signedUrl;
+        }
+      } catch (err) {
+        console.error(`Failed to generate signed URL for ${file.id}:`, err);
+        urlMap[file.id] = null;
+      }
+    }
+
+    return urlMap;
+  } catch {
+    return {};
   }
 }

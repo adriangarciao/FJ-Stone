@@ -16,6 +16,7 @@ export interface ProjectImage {
   project_id: string;
   storage_path: string;
   caption: string | null;
+  alt: string | null;
   sort_order: number;
   created_at: string;
 }
@@ -39,8 +40,11 @@ export interface QuoteRequest {
   service_type: string;
   location: string | null;
   description: string;
+  preferred_contact?: 'phone' | 'email' | 'either';
   status: 'NEW' | 'CONTACTED' | 'SCHEDULED' | 'WON' | 'LOST';
   notes: string | null;
+  source_ip?: string;
+  user_agent?: string;
   created_at: string;
   files?: QuoteRequestFile[];
 }
@@ -49,7 +53,10 @@ export interface QuoteRequestFile {
   id: string;
   quote_request_id: string;
   storage_path: string;
-  file_name: string;
+  original_name: string;
+  file_name?: string; // deprecated, use original_name
+  mime_type?: string;
+  size_bytes?: number;
   created_at: string;
 }
 
@@ -62,6 +69,28 @@ export interface SiteSettings {
   hero_headline: string;
   hero_subheadline: string;
   updated_at: string;
+}
+
+// Content Blocks for visual editing
+export type ContentBlockType = 'text' | 'richtext' | 'image' | 'gallery' | 'list';
+
+export interface ContentBlockValue {
+  text?: string;
+  html?: string;
+  url?: string;
+  alt?: string;
+  items?: Array<{ url: string; caption?: string; alt?: string }>;
+  listItems?: string[];
+}
+
+export interface ContentBlock {
+  id: string;
+  key: string;
+  page: string;
+  block_type: ContentBlockType;
+  value: ContentBlockValue;
+  updated_at: string;
+  created_at: string;
 }
 
 export interface Service {

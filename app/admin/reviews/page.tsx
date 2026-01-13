@@ -3,6 +3,9 @@ import { Plus } from 'lucide-react';
 import { getAllReviews } from '@/lib/supabase/admin-queries';
 import ReviewsListClient from './ReviewsListClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AdminReviewsPage() {
   const reviews = await getAllReviews();
 

@@ -129,9 +129,19 @@ export default function Footer({ siteSettings }: FooterProps) {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} {settings.business_name}. All rights reserved.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <p className="text-gray-500 text-sm">
+              © {new Date().getFullYear()} {settings.business_name}. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4 text-sm">
+              <Link href="/privacy" className="text-gray-500 hover:text-[#990303] transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="text-gray-500 hover:text-[#990303] transition-colors">
+                Terms
+              </Link>
+            </div>
+          </div>
           <button
             onClick={scrollToTop}
             className="flex items-center gap-2 text-gray-400 hover:text-[#990303] transition-colors"
