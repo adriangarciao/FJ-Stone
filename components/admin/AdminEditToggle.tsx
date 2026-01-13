@@ -1,6 +1,7 @@
 'use client';
 
-import { Pencil, X } from 'lucide-react';
+import Link from 'next/link';
+import { Pencil, X, LayoutDashboard } from 'lucide-react';
 import { useEditModeOptional } from './EditModeContext';
 
 export default function AdminEditToggle() {
@@ -14,26 +15,36 @@ export default function AdminEditToggle() {
   const { isEditMode, toggleEditMode } = editMode;
 
   return (
-    <button
-      onClick={toggleEditMode}
-      className={`fixed bottom-4 left-4 z-50 flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-lg transition-all ${
-        isEditMode
-          ? 'bg-[#990303] text-white'
-          : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
-      }`}
-      title={isEditMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}
-    >
-      {isEditMode ? (
-        <>
-          <X size={16} />
-          Exit Edit Mode
-        </>
-      ) : (
-        <>
-          <Pencil size={16} />
-          Edit Mode
-        </>
-      )}
-    </button>
+    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2">
+      <button
+        onClick={toggleEditMode}
+        className={`flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-lg transition-all ${
+          isEditMode
+            ? 'bg-[#990303] text-white'
+            : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+        }`}
+        title={isEditMode ? 'Exit Edit Mode' : 'Enter Edit Mode'}
+      >
+        {isEditMode ? (
+          <>
+            <X size={16} />
+            Exit Edit Mode
+          </>
+        ) : (
+          <>
+            <Pencil size={16} />
+            Edit Mode
+          </>
+        )}
+      </button>
+      <Link
+        href="/admin"
+        className="flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-lg bg-[#292323] text-white hover:bg-[#1a1717] transition-all"
+        title="Go to Admin Dashboard"
+      >
+        <LayoutDashboard size={16} />
+        Dashboard
+      </Link>
+    </div>
   );
 }

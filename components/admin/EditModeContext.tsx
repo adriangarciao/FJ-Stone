@@ -5,23 +5,31 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
 } from 'react';
-import type { ContentBlock } from '@/lib/types';
+import type { ContentBlock, Project } from '@/lib/types';
 
 interface EditModeContextType {
   isEditMode: boolean;
   toggleEditMode: () => void;
   isAdmin: boolean;
   setIsAdmin: (value: boolean) => void;
-  // Editor drawer state
+  // Content block editor drawer state
   activeBlock: ContentBlock | null;
   openEditor: (block: ContentBlock) => void;
   closeEditor: () => void;
-  // Optimistic updates
+  // Optimistic updates for content blocks
   pendingUpdates: Record<string, ContentBlock>;
   setPendingUpdate: (key: string, block: ContentBlock) => void;
   clearPendingUpdate: (key: string) => void;
+  // Project editor drawer state
+  activeProject: Project | null;
+  isCreatingProject: boolean;
+  openProjectEditor: (project: Project | null) => void;
+  closeProjectEditor: () => void;
+  refreshProjectData: () => void;
+  projectRefreshKey: number;
 }
 
 const EditModeContext = createContext<EditModeContextType | null>(null);
@@ -59,6 +67,20 @@ export function EditModeProvider({
   const [activeBlock, setActiveBlock] = useState<ContentBlock | null>(null);
   const [pendingUpdates, setPendingUpdates] = useState<Record<string, ContentBlock>>({});
 
+  // Project editor state
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [isCreatingProject, setIsCreatingProject] = useState(false);
+  const [projectRefreshKey, setProjectRefreshKey] = useState(0);
+
+  // Sync isAdmin state when initialIsAdmin prop changes (e.g., on logout)
+  useEffect(() => {
+    setIsAdmin(initialIsAdmin);
+    // If no longer admin, also turn off edit mode
+    if (!initialIsAdmin) {
+      setIsEditMode(false);
+    }
+  }, [initialIsAdmin]);
+
   const toggleEditMode = useCallback(() => {
     setIsEditMode((prev) => {
       const next = !prev;
@@ -87,6 +109,28 @@ export function EditModeProvider({
     });
   }, []);
 
+  // Project editor functions
+  const openProjectEditor = useCallback((project: Project | null) => {
+    if (project === null) {
+      // Creating new project
+      setIsCreatingProject(true);
+      setActiveProject(null);
+    } else {
+      // Editing existing project
+      setIsCreatingProject(false);
+      setActiveProject(project);
+    }
+  }, []);
+
+  const closeProjectEditor = useCallback(() => {
+    setActiveProject(null);
+    setIsCreatingProject(false);
+  }, []);
+
+  const refreshProjectData = useCallback(() => {
+    setProjectRefreshKey((prev) => prev + 1);
+  }, []);
+
   return (
     <EditModeContext.Provider
       value={{
@@ -100,6 +144,12 @@ export function EditModeProvider({
         pendingUpdates,
         setPendingUpdate,
         clearPendingUpdate,
+        activeProject,
+        isCreatingProject,
+        openProjectEditor,
+        closeProjectEditor,
+        refreshProjectData,
+        projectRefreshKey,
       }}
     >
       {children}
