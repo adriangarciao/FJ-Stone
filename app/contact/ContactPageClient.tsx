@@ -117,20 +117,28 @@ export default function ContactPageClient({
       formData.append('files', file);
     });
 
-    // Submit via server action
-    const submitResult = await submitQuoteRequest(formData);
+    try {
+      // Submit via server action
+      const submitResult = await submitQuoteRequest(formData);
 
-    setIsSubmitting(false);
-
-    if (submitResult.success) {
-      setIsSubmitted(true);
-      setRequestId(submitResult.requestId || null);
-    } else {
-      // Handle field-specific errors from server
-      if (submitResult.fieldErrors) {
-        setErrors(submitResult.fieldErrors);
+      if (submitResult.success) {
+        setIsSubmitted(true);
+        setRequestId(submitResult.requestId || null);
+      } else {
+        // Handle field-specific errors from server
+        if (submitResult.fieldErrors) {
+          setErrors(submitResult.fieldErrors);
+        }
+        setSubmitError(submitResult.error || 'Something went wrong. Please try again.');
       }
-      setSubmitError(submitResult.error || 'Something went wrong. Please try again.');
+    } catch (error) {
+      console.error('Quote submission failed:', error);
+      // Handle network errors or server action failures (e.g., body size limit exceeded)
+      setSubmitError(
+        'Unable to submit your request. Please ensure your files are under 5MB each and try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

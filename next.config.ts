@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Increase body size limit for server actions (file uploads)
+  // Default is 1MB, we need 25MB for 5 files × 5MB each
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '25mb',
+    },
+  },
 };
 
 export default withSentryConfig(nextConfig, {
