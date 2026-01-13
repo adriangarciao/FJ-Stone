@@ -1,13 +1,15 @@
 # F&J Stone Services
 
-A modern, full-stack website for F&J Stone Services — a professional masonry and stonework company serving the Greater Chicago Area. Built with Next.js 16, Supabase, and Tailwind CSS.
+🌐 **Live Site:** [fjstoneservices.com](https://fjstoneservices.com)
+
+A modern, full-stack website for F&J Stone Services. A professional masonry and stonework company serving the Greater Chicago Area. Built with Next.js 16, Supabase, and Tailwind CSS.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
 ![Supabase](https://img.shields.io/badge/Supabase-Backend-green?logo=supabase)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwind-css)
 
-## 🏗️ Overview
+##  Overview
 
 This project is a complete business website with:
 - **Public-facing pages** showcasing services, portfolio, and contact information
@@ -15,7 +17,7 @@ This project is a complete business website with:
 - **Real-time quote request system** with file uploads and email notifications
 - **SEO optimized** with dynamic metadata, sitemap, and Open Graph images
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **[Next.js 16](https://nextjs.org/)** — React framework with App Router & Turbopack
@@ -37,7 +39,7 @@ This project is a complete business website with:
 ### Email
 - **[Resend](https://resend.com/)** — Transactional email service
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 fjs-stone/
@@ -97,7 +99,7 @@ fjs-stone/
 └── tests/                   # Test files
 ```
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ### Tables
 
@@ -119,7 +121,7 @@ All tables have RLS policies:
 - **Admin-only write** via `is_admin()` database function
 - **Service role bypass** for server-side operations
 
-## 🔐 Security Features
+##  Security Features
 
 ### Authentication & Authorization
 - Supabase Auth with email/password
@@ -144,7 +146,7 @@ All tables have RLS policies:
 - Secure filename generation
 - Server action body limit: 25MB
 
-## ✨ Key Features
+##  Key Features
 
 ### Public Features
 - **Responsive design** — Mobile-first, works on all devices
@@ -164,7 +166,7 @@ All tables have RLS policies:
 - **Real-time updates** — Changes reflect immediately
 - **Draft/publish workflow** — Control what's visible to the public
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -222,7 +224,7 @@ npm run dev
 | `npm run test` | Run unit tests |
 | `npm run test:integration` | Run integration tests |
 
-## 🌐 Deployment
+##  Deployment
 
 ### Vercel (Recommended)
 
@@ -237,7 +239,7 @@ Add all `.env.local` variables to your Vercel project settings.
 
 **Important:** Ensure `NEXT_PUBLIC_SITE_URL` matches your production domain for sitemap and OG images.
 
-## 📊 Monitoring
+##  Monitoring
 
 ### Sentry
 - Error tracking in production
@@ -249,7 +251,7 @@ Add all `.env.local` variables to your Vercel project settings.
 - Web Vitals (LCP, FID, CLS)
 - Geographic distribution
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Unit tests
@@ -283,7 +285,7 @@ npm run test -- --watch
 | `/api/admin/project-images/[imageId]` | DELETE | Delete single image |
 | `/api/admin/content/update` | POST | Update content block |
 
-## 🎨 Design System
+##  Design System
 
 ### Colors
 | Color | Hex | Usage |
