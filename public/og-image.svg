@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#292323"/>
+      <stop offset="100%" style="stop-color:#71706e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Decorative accent bar -->
+  <rect x="0" y="0" width="1200" height="8" fill="#990303"/>
+  
+  <!-- Logo placeholder circle -->
+  <circle cx="600" cy="200" r="80" fill="#990303"/>
+  <text x="600" y="220" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white" text-anchor="middle">FJ</text>
+  
+  <!-- Company name -->
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="white" text-anchor="middle">F&amp;J's Stone Services</text>
+  
+  <!-- Tagline -->
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="28" fill="#d1d5db" text-anchor="middle">Expert Stonework &amp; Outdoor Living</text>
+  
+  <!-- Services list -->
+  <text x="600" y="480" font-family="Arial, sans-serif" font-size="20" fill="#9ca3af" text-anchor="middle">Patios • Retaining Walls • Walkways • Outdoor Kitchens • Fire Features</text>
+  
+  <!-- Location -->
+  <text x="600" y="560" font-family="Arial, sans-serif" font-size="22" fill="#990303" text-anchor="middle">Serving the Greater Chicago Area</text>
+</svg>
