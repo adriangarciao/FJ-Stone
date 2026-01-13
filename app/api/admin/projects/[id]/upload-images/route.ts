@@ -3,6 +3,7 @@ import { createClient, createServiceClient } from '@/lib/supabase/server';
 import {
   validatePortfolioFiles,
   generateSafeFileName,
+  validateFileMagicBytes,
 } from '@/lib/validations/portfolio';
 import { revalidatePath } from 'next/cache';
 
@@ -82,11 +83,18 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     for (const file of files) {
       try {
-        // Generate safe storage path
-        const storagePath = generateSafeFileName(projectId, file.name);
-
         // Convert file to buffer for upload
         const arrayBuffer = await file.arrayBuffer();
+
+        // SECURITY: Validate magic bytes to prevent MIME type spoofing
+        const magicValidation = await validateFileMagicBytes(arrayBuffer, file.type);
+        if (!magicValidation.valid) {
+          errors.push(`${file.name}: ${magicValidation.error}`);
+          continue;
+        }
+
+        // Generate safe storage path
+        const storagePath = generateSafeFileName(projectId, file.name);
         const buffer = Buffer.from(arrayBuffer);
 
         // Upload to storage

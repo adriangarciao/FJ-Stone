@@ -182,6 +182,9 @@ export function generateSafeFileName(projectId: string, originalName: string): s
   return `${projectId}/${uuid}.${safeExt}`;
 }
 
+// Re-export magic byte validation for use in admin uploads
+export { validateFileMagicBytes } from '@/lib/validations';
+
 // ============ TYPE EXPORTS ============
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
