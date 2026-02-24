@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { EditModeWrapper } from '@/components/admin';
 import { getSiteSettings } from '@/lib/supabase/queries';
@@ -99,6 +100,7 @@ export default async function RootLayout({
         <Analytics />
         <SpeedInsights />
       </body>
+      <GoogleAnalytics gaId="G-7WLRM8K4SB" />
     </html>
   );
 }
