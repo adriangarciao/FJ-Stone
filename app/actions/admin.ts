@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient, createServiceClient } from '@/lib/supabase/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { z } from 'zod';
 
 // Helper to check if user is admin
@@ -356,6 +356,7 @@ export async function updateSiteSettings(formData: FormData) {
     return { success: false, error: error.message };
   }
 
+  revalidateTag('site-settings', 'max');
   revalidatePath('/admin/settings');
   revalidatePath('/');
   revalidatePath('/contact');
