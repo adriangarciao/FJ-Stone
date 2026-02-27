@@ -39,12 +39,7 @@ export default function Hero({
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center lg:justify-start"
-          >
+          <div className="flex justify-center lg:justify-start">
             <div className="relative w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px]">
               <Image
                 src={logoImage}
@@ -52,9 +47,10 @@ export default function Hero({
                 fill
                 className="object-contain"
                 priority
+                sizes="(max-width: 640px) 280px, (max-width: 1024px) 400px, 500px"
               />
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Side - Text and CTAs */}
           <div className="text-center lg:text-left">

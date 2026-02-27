@@ -1,5 +1,7 @@
 import 'server-only';
 import { createClient } from './server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { unstable_cache } from 'next/cache';
 import type { Project, Review, SiteSettings } from '../types';
 import { portfolioProjects, getFeaturedPortfolioProjects } from '@/src/data/portfolioImages';
 
@@ -15,9 +17,14 @@ const defaultSiteSettings: SiteSettings = {
   updated_at: new Date().toISOString(),
 };
 
-export async function getSiteSettings(): Promise<SiteSettings> {
-  try {
-    const supabase = await createClient();
+// Uses a cookie-free client so this can safely run inside unstable_cache
+// (the SSR createClient requires request context via cookies())
+const getCachedSiteSettings = unstable_cache(
+  async (): Promise<SiteSettings> => {
+    const supabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    );
     const { data, error } = await supabase
       .from('site_settings')
       .select('*')
@@ -29,6 +36,14 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     }
 
     return data as SiteSettings;
+  },
+  ['site-settings'],
+  { revalidate: 3600, tags: ['site-settings'] },
+);
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  try {
+    return await getCachedSiteSettings();
   } catch {
     return defaultSiteSettings;
   }
