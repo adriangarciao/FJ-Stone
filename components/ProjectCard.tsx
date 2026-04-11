@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Project } from '@/lib/types';
+import { usePreloadedLazyLoad } from '@/hooks/usePreloadedLazyLoad';
 
 interface ProjectCardProps {
   project: Project;
@@ -16,6 +17,13 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   const imageSrc = firstImage?.storage_path || '/images/placeholder.jpg';
   const imageAlt = firstImage?.caption || project.title;
 
+  // Eager-load the first 6 cards; preload the rest 800px before viewport
+  const isEager = index < 6;
+  const { ref, isInView } = usePreloadedLazyLoad<HTMLDivElement>({
+    rootMargin: '800px 0px',
+    skip: isEager,
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -25,18 +33,22 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
     >
       <Link href={`/portfolio/${project.slug}`} className="block group">
         <motion.div
+          ref={ref}
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
           className="relative overflow-hidden bg-gray-200 aspect-[4/3]"
         >
-          {/* Project Image */}
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
+          {/* Project Image — renders once preloaded or eagerly for first 6 */}
+          {isInView && (
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority={index < 3}
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          )}
 
           {/* Hover Overlay */}
           <div className="absolute inset-0 bg-[#292323]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
