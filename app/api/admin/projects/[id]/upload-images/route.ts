@@ -5,6 +5,7 @@ import {
   generateSafeFileName,
   validateFileMagicBytes,
 } from '@/lib/validations/portfolio';
+import { generateBlurDataUrl } from '@/lib/getImagePlaceholder';
 import { revalidatePath } from 'next/cache';
 
 interface RouteParams {
@@ -97,6 +98,9 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         const storagePath = generateSafeFileName(projectId, file.name);
         const buffer = Buffer.from(arrayBuffer);
 
+        // Generate blur placeholder while buffer is in memory (free — no extra fetch)
+        const blur_data_url = await generateBlurDataUrl(buffer);
+
         // Upload to storage
         const { error: uploadError } = await serviceClient.storage
           .from('portfolio')
@@ -111,7 +115,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
           continue;
         }
 
-        // Create database record
+        // Create database record with blur placeholder
         const { data: imageRecord, error: insertError } = await serviceClient
           .from('project_images')
           .insert({
@@ -120,6 +124,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
             caption: null,
             alt: null,
             sort_order: nextSortOrder++,
+            blur_data_url,
           })
           .select()
           .single();

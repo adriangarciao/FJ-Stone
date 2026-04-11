@@ -17,7 +17,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   const firstImage = project.images?.[0];
   const imageSrc = getProjectImageUrl(firstImage?.storage_path || '') || '/images/placeholder.jpg';
   const imageAlt = firstImage?.alt || firstImage?.caption || project.title;
-  const blurDataURL = firstImage?.blurDataURL;
+  const blurDataURL = firstImage?.blur_data_url;
 
   const [isLoaded, setIsLoaded] = useState(false);
 

@@ -65,7 +65,7 @@ export async function getPublishedProjects(): Promise<Project[]> {
       return addBlurToProjects(portfolioProjects);
     }
 
-    // Fetch images for each project
+    // Fetch images for each project (blur_data_url comes from DB automatically via select('*'))
     const projectsWithImages = await Promise.all(
       projects.map(async (project) => {
         const { data: images } = await supabase
@@ -81,9 +81,9 @@ export async function getPublishedProjects(): Promise<Project[]> {
       })
     );
 
-    return addBlurToProjects(projectsWithImages);
+    return projectsWithImages;
   } catch {
-    // Fallback to local portfolio data
+    // Fallback to local portfolio data — blur must be generated since it's not in DB
     return addBlurToProjects(portfolioProjects);
   }
 }
@@ -104,7 +104,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       return addBlurToProjects(getFeaturedPortfolioProjects());
     }
 
-    // Fetch images for each project
+    // Fetch images for each project (blur_data_url comes from DB automatically via select('*'))
     const projectsWithImages = await Promise.all(
       projects.map(async (project) => {
         const { data: images } = await supabase
@@ -121,9 +121,9 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       })
     );
 
-    return addBlurToProjects(projectsWithImages);
+    return projectsWithImages;
   } catch {
-    // Fallback to local portfolio data
+    // Fallback to local portfolio data — blur must be generated since it's not in DB
     return addBlurToProjects(getFeaturedPortfolioProjects());
   }
 }
