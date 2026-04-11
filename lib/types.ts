@@ -19,6 +19,8 @@ export interface ProjectImage {
   alt: string | null;
   sort_order: number;
   created_at: string;
+  /** Tiny base64 blur placeholder — generated server-side, never stored in DB */
+  blurDataURL?: string | null;
 }
 
 export interface Review {

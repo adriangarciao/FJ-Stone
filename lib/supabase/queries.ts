@@ -4,6 +4,7 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import type { Project, Review, SiteSettings } from '../types';
 import { portfolioProjects, getFeaturedPortfolioProjects } from '@/src/data/portfolioImages';
+import { addBlurToProjects } from '../getImagePlaceholder';
 
 // Default site settings fallback
 const defaultSiteSettings: SiteSettings = {
@@ -61,7 +62,7 @@ export async function getPublishedProjects(): Promise<Project[]> {
     if (error || !projects || projects.length === 0) {
       // Fallback to local portfolio data
       console.log('Using local portfolio data');
-      return portfolioProjects;
+      return addBlurToProjects(portfolioProjects);
     }
 
     // Fetch images for each project
@@ -80,10 +81,10 @@ export async function getPublishedProjects(): Promise<Project[]> {
       })
     );
 
-    return projectsWithImages;
+    return addBlurToProjects(projectsWithImages);
   } catch {
     // Fallback to local portfolio data
-    return portfolioProjects;
+    return addBlurToProjects(portfolioProjects);
   }
 }
 
@@ -100,7 +101,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
     if (error || !projects || projects.length === 0) {
       // Fallback to local portfolio data
-      return getFeaturedPortfolioProjects();
+      return addBlurToProjects(getFeaturedPortfolioProjects());
     }
 
     // Fetch images for each project
@@ -120,10 +121,10 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       })
     );
 
-    return projectsWithImages;
+    return addBlurToProjects(projectsWithImages);
   } catch {
     // Fallback to local portfolio data
-    return getFeaturedPortfolioProjects();
+    return addBlurToProjects(getFeaturedPortfolioProjects());
   }
 }
 

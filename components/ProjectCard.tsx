@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Project } from '@/lib/types';
+import { getProjectImageUrl } from '@/lib/supabase/storage';
 import { usePreloadedLazyLoad } from '@/hooks/usePreloadedLazyLoad';
 
 interface ProjectCardProps {
@@ -12,10 +14,12 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
-  // Get the first image from the project, or use a placeholder
   const firstImage = project.images?.[0];
-  const imageSrc = firstImage?.storage_path || '/images/placeholder.jpg';
-  const imageAlt = firstImage?.caption || project.title;
+  const imageSrc = getProjectImageUrl(firstImage?.storage_path || '') || '/images/placeholder.jpg';
+  const imageAlt = firstImage?.alt || firstImage?.caption || project.title;
+  const blurDataURL = firstImage?.blurDataURL;
+
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Eager-load the first 6 cards; preload the rest 800px before viewport
   const isEager = index < 6;
@@ -38,14 +42,28 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           transition={{ duration: 0.2 }}
           className="relative overflow-hidden bg-gray-200 aspect-[4/3]"
         >
-          {/* Project Image — renders once preloaded or eagerly for first 6 */}
+          {/* Blur placeholder — always visible until full image loads */}
+          {blurDataURL && (
+            <div
+              className={`absolute inset-0 bg-cover bg-center scale-110 blur-xl transition-opacity duration-500 ${
+                isLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+              }`}
+              style={{ backgroundImage: `url(${blurDataURL})` }}
+              aria-hidden="true"
+            />
+          )}
+
+          {/* Full image — renders once preloaded or eagerly for first 6 */}
           {isInView && (
             <Image
               src={imageSrc}
               alt={imageAlt}
               fill
               priority={index < 3}
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              onLoad={() => setIsLoaded(true)}
+              className={`object-cover transition-[opacity,transform] duration-300 group-hover:scale-105 ${
+                isLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           )}
