@@ -11,6 +11,7 @@ import { createClient } from '@supabase/supabase-js';
 import { getPlaiceholder } from 'plaiceholder';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as fs from 'fs/promises';
 
 dotenv.config({ path: path.join(process.cwd(), '.env.local') });
 
@@ -57,18 +58,26 @@ async function main() {
   let failed = 0;
 
   for (const image of images) {
-    const url = `${supabaseUrl}/storage/v1/object/public/portfolio/${image.storage_path}`;
     process.stdout.write(`  ${image.id} (${image.storage_path})... `);
 
     try {
-      const res = await fetch(url);
-      if (!res.ok) {
-        console.log(`SKIP (HTTP ${res.status})`);
-        failed++;
-        continue;
-      }
+      let buffer: Buffer;
 
-      const buffer = Buffer.from(await res.arrayBuffer());
+      if (image.storage_path.startsWith('/images/')) {
+        // Local image in public/ — read from disk
+        const filePath = path.join(process.cwd(), 'public', image.storage_path);
+        buffer = await fs.readFile(filePath);
+      } else {
+        // Supabase storage image — fetch via HTTP
+        const url = `${supabaseUrl}/storage/v1/object/public/portfolio/${image.storage_path}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          console.log(`SKIP (HTTP ${res.status})`);
+          failed++;
+          continue;
+        }
+        buffer = Buffer.from(await res.arrayBuffer());
+      }
       const blur_data_url = await generateBlurDataUrl(buffer);
 
       if (!blur_data_url) {
