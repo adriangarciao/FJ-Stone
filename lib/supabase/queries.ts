@@ -4,6 +4,7 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import type { Project, Review, SiteSettings } from '../types';
 import { portfolioProjects, getFeaturedPortfolioProjects } from '@/src/data/portfolioImages';
+import { addBlurToProjects } from '../getImagePlaceholder';
 
 // Default site settings fallback
 const defaultSiteSettings: SiteSettings = {
@@ -61,10 +62,10 @@ export async function getPublishedProjects(): Promise<Project[]> {
     if (error || !projects || projects.length === 0) {
       // Fallback to local portfolio data
       console.log('Using local portfolio data');
-      return portfolioProjects;
+      return addBlurToProjects(portfolioProjects);
     }
 
-    // Fetch images for each project
+    // Fetch images for each project (blur_data_url comes from DB automatically via select('*'))
     const projectsWithImages = await Promise.all(
       projects.map(async (project) => {
         const { data: images } = await supabase
@@ -82,8 +83,8 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
     return projectsWithImages;
   } catch {
-    // Fallback to local portfolio data
-    return portfolioProjects;
+    // Fallback to local portfolio data — blur must be generated since it's not in DB
+    return addBlurToProjects(portfolioProjects);
   }
 }
 
@@ -100,10 +101,10 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
     if (error || !projects || projects.length === 0) {
       // Fallback to local portfolio data
-      return getFeaturedPortfolioProjects();
+      return addBlurToProjects(getFeaturedPortfolioProjects());
     }
 
-    // Fetch images for each project
+    // Fetch images for each project (blur_data_url comes from DB automatically via select('*'))
     const projectsWithImages = await Promise.all(
       projects.map(async (project) => {
         const { data: images } = await supabase
@@ -122,8 +123,8 @@ export async function getFeaturedProjects(): Promise<Project[]> {
 
     return projectsWithImages;
   } catch {
-    // Fallback to local portfolio data
-    return getFeaturedPortfolioProjects();
+    // Fallback to local portfolio data — blur must be generated since it's not in DB
+    return addBlurToProjects(getFeaturedPortfolioProjects());
   }
 }
 
