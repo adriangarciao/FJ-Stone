@@ -33,7 +33,6 @@ export default function Hero({
   headline,
   subheadline,
   showCTAs = true,
-  minHeight = 'min-h-screen',
   contentBlocks = {},
 }: HeroProps) {
   const headlineBlock = contentBlocks['home.hero.headline'] || null;
@@ -41,37 +40,10 @@ export default function Hero({
   const taglineBlock = contentBlocks['home.hero.tagline'] || null;
 
   return (
-    <section className={`relative ${minHeight} flex items-center justify-center overflow-hidden`}>
+    <section className="min-h-screen flex flex-col items-center justify-center gap-10 bg-accent px-6 py-20">
 
-      {/* Base background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
-
-      {/* Background portfolio images — decorative, low opacity */}
-      <div className="absolute inset-0 flex pointer-events-none" aria-hidden="true">
-        {HERO_IMAGES.map((img, i) => (
-          <div
-            key={i}
-            className={`relative flex-1 opacity-[0.18] ${i === 1 ? 'block' : 'hidden md:block'}`}
-          >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Gradient overlay for text legibility */}
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-[#292323]/60 via-transparent to-[#292323]/60 z-[1]"
-        aria-hidden="true"
-      />
-
-      {/* Foreground content */}
-      <div className="relative z-10 flex flex-col items-center text-center gap-5 px-6 max-w-3xl mx-auto">
+      {/* Text content */}
+      <div className="flex flex-col items-center text-center gap-5 max-w-3xl">
         <EditableText
           block={taglineBlock}
           fallback="Quality Work, Built to Last"
@@ -97,19 +69,40 @@ export default function Hero({
           <div className="flex flex-col sm:flex-row gap-4 mt-2">
             <Link
               href="/portfolio"
-              className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#292323] px-8 py-3.5 font-semibold transition-all"
+              className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-accent px-8 py-3.5 font-semibold transition-all"
             >
               See Our Work
             </Link>
             <Link
               href="/contact"
-              className="w-full sm:w-auto bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-8 py-3.5 font-semibold transition-colors"
+              className="w-full sm:w-auto bg-white text-accent hover:bg-white/90 px-8 py-3.5 font-semibold transition-colors"
             >
               Request a Quote
             </Link>
           </div>
         )}
       </div>
+
+      {/* Three contained portfolio images */}
+      <div className="flex items-center justify-center gap-5 w-full max-w-5xl" aria-hidden="true">
+        {HERO_IMAGES.map((img, i) => (
+          <div
+            key={i}
+            className={`relative rounded-xl overflow-hidden opacity-30 w-[280px] h-[380px] flex-shrink-0 ${
+              i === 1 ? 'block' : 'hidden md:block'
+            }`}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              className="object-cover"
+              sizes="280px"
+            />
+          </div>
+        ))}
+      </div>
+
     </section>
   );
 }
