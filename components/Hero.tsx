@@ -40,7 +40,7 @@ export default function Hero({
   const taglineBlock = contentBlocks['home.hero.tagline'] || null;
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center gap-10 bg-accent px-6 py-20">
+    <section className="min-h-screen flex flex-col items-center justify-center gap-10 bg-accent px-6 pt-32 pb-20">
 
       {/* Text content */}
       <div className="flex flex-col items-center text-center gap-5 max-w-3xl">
@@ -48,7 +48,7 @@ export default function Hero({
           block={taglineBlock}
           fallback="Quality Work, Built to Last"
           as="p"
-          className="text-sm uppercase tracking-widest text-white/60"
+          className="text-sm uppercase tracking-widest text-white/60 px-4 py-2"
         />
 
         <EditableText
