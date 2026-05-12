@@ -5,25 +5,27 @@ export default function HomeLoading() {
   return (
     <>
       {/* Hero Section Skeleton */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#292323] to-[#71706e]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Logo skeleton */}
-            <div className="flex justify-center lg:justify-start">
-              <Skeleton className="w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] rounded-full bg-white/10" />
-            </div>
-            {/* Text skeleton */}
-            <div className="text-center lg:text-left space-y-6">
-              <Skeleton className="h-12 w-3/4 bg-white/20" />
-              <Skeleton className="h-6 w-full bg-white/10" />
-              <Skeleton className="h-6 w-5/6 bg-white/10" />
-              <div className="flex gap-4 justify-center lg:justify-start">
-                <Skeleton className="h-12 w-36 bg-white/20" />
-                <Skeleton className="h-12 w-36 bg-white/20" />
-              </div>
-            </div>
-          </div>
+      <section className="min-h-screen flex flex-col items-center justify-center gap-10 bg-accent px-6 pt-32 pb-20 animate-pulse">
+        {/* Slogan line */}
+        <div className="h-3 w-32 rounded-full bg-white/20" />
+
+        {/* Headline — two lines */}
+        <div className="flex flex-col items-center gap-3 -mt-6">
+          <div className="h-10 w-[520px] max-w-full rounded-lg bg-white/20" />
+          <div className="h-10 w-[380px] max-w-full rounded-lg bg-white/20" />
+        </div>
+
+        {/* Three image cards */}
+        <div className="flex items-center justify-center gap-5 w-full max-w-5xl">
+          <div className="hidden md:block w-[280px] h-[380px] rounded-xl bg-white/10 flex-shrink-0" />
+          <div className="w-[280px] h-[380px] rounded-xl bg-white/10 flex-shrink-0" />
+          <div className="hidden md:block w-[280px] h-[380px] rounded-xl bg-white/10 flex-shrink-0" />
+        </div>
+
+        {/* CTA buttons */}
+        <div className="flex gap-4">
+          <div className="h-11 w-36 rounded-md bg-white/20" />
+          <div className="h-11 w-36 rounded-md bg-white/20" />
         </div>
       </section>
 
