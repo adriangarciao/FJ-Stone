@@ -41,6 +41,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Reveal: honor reduced-motion by showing content immediately, no transition.
+   !important overrides the inline styles set by the Reveal component. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

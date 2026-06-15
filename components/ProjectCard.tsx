@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Project } from '@/lib/types';
 import { getProjectImageUrl } from '@/lib/supabase/storage';
 import { usePreloadedLazyLoad } from '@/hooks/usePreloadedLazyLoad';
+import Reveal from './Reveal';
 
 interface ProjectCardProps {
   project: Project;
@@ -29,18 +29,11 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-    >
+    <Reveal delay={index * 0.1}>
       <Link href={`/portfolio/${project.slug}`} className="block group">
-        <motion.div
+        <div
           ref={ref}
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.2 }}
-          className="relative overflow-hidden bg-gray-200 aspect-[4/3]"
+          className="relative overflow-hidden bg-gray-200 aspect-[4/3] transition-transform duration-200 hover:scale-[1.02]"
         >
           {/* Blur placeholder — always visible until full image loads */}
           {blurDataURL && (
@@ -81,7 +74,7 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               {project.service_type}
             </span>
           </div>
-        </motion.div>
+        </div>
 
         <div className="mt-4">
           <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#990303] transition-colors">
@@ -89,6 +82,6 @@ export default function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           </h3>
         </div>
       </Link>
-    </motion.div>
+    </Reveal>
   );
 }

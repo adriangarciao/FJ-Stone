@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Check, ArrowRight } from 'lucide-react';
 import {
   Hero,
@@ -11,6 +8,7 @@ import {
   ServiceCard,
   ProjectCard,
   ReviewCard,
+  Reveal,
 } from '@/components';
 import type { SiteSettings, Project, Review, Service, ContentBlock } from '@/lib/types';
 
@@ -82,27 +80,25 @@ export default function HomePageClient({
             />
             <ul className="space-y-4">
               {whyChooseUs.map((item, index) => (
-                <motion.li
+                <Reveal
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  as="li"
+                  variant="left"
+                  duration={0.4}
+                  delay={index * 0.1}
                   className="flex items-start gap-3"
                 >
                   <div className="w-6 h-6 bg-[#990303] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Check size={16} className="text-white" />
                   </div>
                   <span className="text-gray-700">{item}</span>
-                </motion.li>
+                </Reveal>
               ))}
             </ul>
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+          <Reveal
+            variant="scale"
+            duration={0.6}
             className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center p-8"
           >
             <div className="relative w-full h-full">
@@ -111,9 +107,10 @@ export default function HomePageClient({
                 alt="F&J's Stone Services Logo"
                 fill
                 className="object-contain"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </Section>
 
@@ -167,38 +164,28 @@ export default function HomePageClient({
       {/* CTA Section */}
       <Section background="dark">
         <div className="text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+          <Reveal
+            as="h2"
             className="text-3xl sm:text-4xl font-bold text-white mb-4"
           >
             Ready to Transform Your Outdoor Space?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={0.1}
             className="text-gray-300 text-lg max-w-2xl mx-auto mb-8"
           >
             Contact us today for a free consultation and estimate. Let&apos;s bring your
             vision to life.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
+          </Reveal>
+          <Reveal delay={0.2}>
             <Link
               href="/contact"
               className="inline-block bg-[#990303] hover:bg-[#71706e] text-white border-2 border-white px-10 py-4 font-semibold text-lg transition-colors"
             >
               Get Your Free Quote
             </Link>
-          </motion.div>
+          </Reveal>
         </div>
       </Section>
     </>

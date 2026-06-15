@@ -5,17 +5,19 @@ import Image from 'next/image';
 import { EditableText } from '@/components/admin';
 import type { ContentBlock } from '@/lib/types';
 
+// Small, decorative-only copies (rendered at ~280px wide, opacity-30).
+// Originals live in /images and are reused full-size on other pages.
 const HERO_IMAGES = [
   {
-    src: '/images/80AEF9C2-11A9-4C96-9D2C-26A952E84EE3_1_105_c.jpeg',
+    src: '/images/hero/hero-1.webp',
     alt: 'Residential patio with landscaping',
   },
   {
-    src: '/images/5E3D4375-386D-4C1F-AC5F-36319F98C214_1_105_c.jpeg',
+    src: '/images/hero/hero-2.webp',
     alt: 'Tudor home flagstone walkway',
   },
   {
-    src: '/images/73A1BE3C-0FE1-461F-AF66-2AEE21419E70_1_105_c.jpeg',
+    src: '/images/hero/hero-3.webp',
     alt: 'Residential paver driveway',
   },
 ];
