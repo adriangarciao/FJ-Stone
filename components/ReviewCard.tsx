@@ -1,8 +1,6 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { Review } from '@/lib/types';
+import Reveal from './Reveal';
 
 interface ReviewCardProps {
   review: Review;
@@ -11,11 +9,8 @@ interface ReviewCardProps {
 
 export default function ReviewCard({ review, index = 0 }: ReviewCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+    <Reveal
+      delay={index * 0.1}
       className="bg-white border border-gray-200 p-8 relative"
     >
       {/* Quote Icon */}
@@ -51,7 +46,7 @@ export default function ReviewCard({ review, index = 0 }: ReviewCardProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </Reveal>
   );
 }
 

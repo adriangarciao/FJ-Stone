@@ -1,8 +1,5 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import Reveal from './Reveal';
 
 interface SectionProps {
   children: ReactNode;
@@ -17,9 +14,6 @@ export default function Section({
   id,
   background = 'white',
 }: SectionProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   const bgClasses = {
     white: 'bg-white',
     gray: 'bg-gray-50',
@@ -28,18 +22,16 @@ export default function Section({
 
   return (
     <section
-      ref={ref}
       id={id}
       className={`py-20 lg:py-28 ${bgClasses[background]} ${className}`}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+      <Reveal
+        duration={0.6}
+        margin="-100px"
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
         {children}
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

@@ -104,22 +104,29 @@ export async function getFeaturedProjects(): Promise<Project[]> {
       return addBlurToProjects(getFeaturedPortfolioProjects());
     }
 
-    // Fetch images for each project (blur_data_url comes from DB automatically via select('*'))
-    const projectsWithImages = await Promise.all(
-      projects.map(async (project) => {
-        const { data: images } = await supabase
-          .from('project_images')
-          .select('*')
-          .eq('project_id', project.id)
-          .order('sort_order', { ascending: true })
-          .limit(1);
+    // Fetch the cover image for every project in a single query (avoids N+1),
+    // then keep the first image per project by sort_order.
+    const projectIds = projects.map((p) => p.id);
+    const { data: allImages } = await supabase
+      .from('project_images')
+      .select('*')
+      .in('project_id', projectIds)
+      .order('sort_order', { ascending: true });
 
-        return {
-          ...project,
-          images: images || [],
-        } as Project;
-      })
-    );
+    const coverByProject = new Map<string, NonNullable<typeof allImages>[number]>();
+    for (const image of allImages || []) {
+      if (!coverByProject.has(image.project_id)) {
+        coverByProject.set(image.project_id, image);
+      }
+    }
+
+    const projectsWithImages = projects.map((project) => {
+      const cover = coverByProject.get(project.id);
+      return {
+        ...project,
+        images: cover ? [cover] : [],
+      } as Project;
+    });
 
     return projectsWithImages;
   } catch {

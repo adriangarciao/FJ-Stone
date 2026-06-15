@@ -1,7 +1,5 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Reveal from './Reveal';
 import {
   Grid3X3,
   Layers,
@@ -30,14 +28,8 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
   const Icon = iconMap[service.icon] || Grid3X3;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5 }}
-      className="bg-white border border-gray-200 p-8 group hover:shadow-xl transition-shadow"
-    >
+    <Reveal delay={index * 0.1} className="h-full">
+      <div className="h-full bg-white border border-gray-200 p-8 group hover:shadow-xl hover:-translate-y-[5px] transition-[box-shadow,transform] duration-300">
       <div className="w-14 h-14 bg-[#990303]/10 flex items-center justify-center mb-6 group-hover:bg-[#990303]/20 transition-colors">
         <Icon size={28} className="text-[#990303]" />
       </div>
@@ -70,7 +62,8 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
           />
         </svg>
       </Link>
-    </motion.div>
+      </div>
+    </Reveal>
   );
 }
 
