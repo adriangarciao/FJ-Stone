@@ -30,6 +30,9 @@ interface RevealProps {
  * Replaces framer-motion's `whileInView` fade/slide on the marketing pages so
  * the route bundle no longer ships the animation library. Animates once when
  * the element first enters the viewport, then disconnects.
+ *
+ * Reduced-motion is handled in globals.css via `[data-reveal]` — users with
+ * that preference get fully-visible content with no transition.
  */
 export default function Reveal({
   children,
@@ -47,12 +50,6 @@ export default function Reveal({
     const el = ref.current;
     if (!el) return;
 
-    // Respect users who prefer reduced motion — show immediately, no transition.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setVisible(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -69,6 +66,7 @@ export default function Reveal({
   return (
     <Tag
       ref={ref}
+      data-reveal=""
       className={className}
       style={{
         opacity: visible ? 1 : 0,
