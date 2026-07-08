@@ -92,7 +92,9 @@ fjs-stone/
 ├── public/                  # Static assets
 │   ├── images/              # Local images
 │   ├── og-image.jpg         # Open Graph image
-│   └── icon.svg             # Favicon
+│   ├── favicon.svg          # Favicon (SVG)
+│   ├── site.webmanifest     # PWA manifest
+│   └── ...                  # favicon.ico, apple-touch-icon, android-chrome, etc.
 ├── supabase/                # Database
 │   ├── setup.sql            # Initial schema
 │   └── migrations/          # SQL migrations
