@@ -5,6 +5,7 @@ import {
   Hero,
   Section,
   SectionHeader,
+  AreasWeServe,
   ServiceCard,
   ProjectCard,
   ReviewCard,
@@ -113,6 +114,9 @@ export default function HomePageClient({
           </Reveal>
         </div>
       </Section>
+
+      {/* Areas We Serve Section */}
+      <AreasWeServe />
 
       {/* Featured Projects Section */}
       <Section background="gray" id="portfolio">
