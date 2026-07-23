@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { EditModeWrapper } from '@/components/admin';
+import { StructuredData } from '@/components';
 import { getSiteSettings } from '@/lib/supabase/queries';
 import RootLayoutContent from './RootLayoutContent';
 
@@ -101,6 +102,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
+        <StructuredData />
         <EditModeWrapper>
           <RootLayoutContent siteSettings={siteSettings}>
             {children}
