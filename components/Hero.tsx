@@ -26,7 +26,6 @@ interface HeroProps {
   headline: string;
   subheadline: string;
   showCTAs?: boolean;
-  logoImage?: string;
   minHeight?: string;
   contentBlocks?: Record<string, ContentBlock>;
 }

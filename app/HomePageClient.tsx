@@ -44,7 +44,6 @@ export default function HomePageClient({
         headline={siteSettings.hero_headline}
         subheadline={siteSettings.hero_subheadline}
         showCTAs={true}
-        logoImage="/images/fj_logo.png"
         contentBlocks={contentBlocks}
       />
 
@@ -104,7 +103,7 @@ export default function HomePageClient({
           >
             <div className="relative w-full h-full">
               <Image
-                src="/images/fj_logo.png"
+                src="/images/fjstonelogo_cropped.webp"
                 alt="F&J's Stone Services Logo"
                 fill
                 className="object-contain"

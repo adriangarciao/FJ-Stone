@@ -1,32 +1,6 @@
 import Link from 'next/link';
 import Section, { SectionHeader } from './Section';
-
-interface ServiceArea {
-  region: string;
-  /** Optional qualifier shown next to the region label (e.g. the primary area). */
-  note?: string;
-  towns: string;
-}
-
-const serviceAreas: ServiceArea[] = [
-  {
-    region: 'North Shore',
-    note: 'Primary Service Area',
-    towns: 'Glenview, Wilmette, Evanston, Highland Park',
-  },
-  {
-    region: 'Northwest Suburbs',
-    towns: 'Park Ridge, Des Plaines, Barrington',
-  },
-  {
-    region: 'Fox Valley',
-    towns: 'Carpentersville, Elgin, Algonquin, West Dundee, Lake in the Hills',
-  },
-  {
-    region: 'Chicago & Nearby',
-    towns: 'Chicago, Cicero, Naperville',
-  },
-];
+import { serviceAreas } from '@/lib/serviceAreas';
 
 /**
  * Areas We Serve — static, server-rendered local-SEO section. Town names ship as
@@ -55,7 +29,9 @@ export default function AreasWeServe() {
                 </span>
               )}
             </h3>
-            <p className="text-gray-700 leading-relaxed">{area.towns}</p>
+            <p className="text-gray-700 leading-relaxed">
+              {area.towns.join(', ')}
+            </p>
           </div>
         ))}
       </div>
