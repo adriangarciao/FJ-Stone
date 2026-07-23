@@ -6,7 +6,6 @@ interface ServiceArea {
   /** Optional qualifier shown next to the region label (e.g. the primary area). */
   note?: string;
   towns: string;
-  primary?: boolean;
 }
 
 const serviceAreas: ServiceArea[] = [
@@ -14,7 +13,6 @@ const serviceAreas: ServiceArea[] = [
     region: 'North Shore',
     note: 'Primary Service Area',
     towns: 'Glenview, Wilmette, Evanston, Highland Park',
-    primary: true,
   },
   {
     region: 'Northwest Suburbs',
@@ -40,24 +38,16 @@ export default function AreasWeServe() {
     <Section background="gray" id="areas-we-serve">
       <SectionHeader
         title="Areas We Serve"
-        subtitle="F&J's Stone Services designs and builds patios, retaining walls, walkways, and outdoor living spaces throughout Chicago's North Shore and surrounding communities. Explore our service area below — and if you don't see your town, reach out anyway."
+        subtitle="F&J's Stone Services designs and builds patios, retaining walls, walkways, and outdoor living spaces throughout Chicago's North Shore and surrounding communities. Explore our service area below, and if you don't see your town, reach out anyway."
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {serviceAreas.map((area) => (
           <div
             key={area.region}
-            className={`p-6 border transition-colors ${
-              area.primary
-                ? 'bg-[#990303]/5 border-2 border-[#990303]'
-                : 'bg-white border-gray-200'
-            }`}
+            className="p-6 border border-gray-200 bg-white"
           >
-            <h3
-              className={`font-bold mb-3 ${
-                area.primary ? 'text-xl text-[#990303]' : 'text-lg text-gray-900'
-              }`}
-            >
+            <h3 className="font-bold mb-3 text-lg text-gray-900">
               {area.region}
               {area.note && (
                 <span className="block text-sm font-semibold text-[#990303] mt-1">
