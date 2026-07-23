@@ -99,7 +99,7 @@ export default function HomePageClient({
           <Reveal
             variant="scale"
             duration={0.6}
-            className="relative aspect-[4/3] bg-gradient-to-br from-[#292323] to-[#71706e] flex items-center justify-center p-8"
+            className="relative aspect-[4/3] bg-white flex items-center justify-center p-8"
           >
             <div className="relative w-full h-full">
               <Image
